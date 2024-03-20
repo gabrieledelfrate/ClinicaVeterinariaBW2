@@ -39,7 +39,7 @@ namespace ClinicaVeterinaria.Controllers
                 {
                     db.Beasts.Add(beast);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Beast");
+                    return RedirectToAction("Index", "Doctors");
                 }
                 catch (Exception ex)
                 {

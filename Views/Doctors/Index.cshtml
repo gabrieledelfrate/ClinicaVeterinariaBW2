@@ -5,21 +5,26 @@
 }
 
 <div class="container">
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between" style="width: 60%;margin: auto;">
         <h2>Lista Animali</h2>
         <a href="@Url.Action("AddBeast", "Doctors")" class="btn btn-success mb-3">Aggiungi</a>
     </div>
-    <table class="table table-striped">
+    @*Inizo codice Metha*@
+    <div class="row mb-2" style="width: 60%; margin: auto;">
+        <div class="col-md-3">Foto bestia</div>
+        <div class="col-md-6 ps-0">Nome bestia</div>
+    </div>
+    <table class="table table-striped" style="width: 60%;margin: auto;">
         <tbody>
             @foreach (var beast in Model)
             {
                 <tr>
                     <td>
                         <div class="row">
-                            <div class="col-md-auto">
+                            <div class="col-md-4">
                                 <img src="@beast.Foto" alt="Foto" style="max-width: 100px; max-height: 100px;" />
                             </div>
-                            <div class="col">
+                            <div class="col-md-6 ps-3">
                                 <div class="d-flex align-items-center">
                                     <span>@beast.Nome</span>
                                 </div>
