@@ -10,8 +10,18 @@ namespace ClinicaVeterinaria.Controllers
     public class DoctorsController : Controller
     {
         private DBContext db = new DBContext();
-        // GET: Doctors
+
+
+
+        // Inizio Codice Pes
+
         public ActionResult Index()
+        {
+            var beasts = db.Beasts.ToList();
+            return View(beasts);
+        }
+
+        public ActionResult AddBeast()
         {
             return View();
         }
