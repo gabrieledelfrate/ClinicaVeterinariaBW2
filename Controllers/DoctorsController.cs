@@ -21,11 +21,6 @@ namespace ClinicaVeterinaria.Controllers
             return View(beasts);
         }
 
-        public ActionResult AddBeast()
-        {
-            return View();
-        }
-
         // Inizio Codice Pes
 
         public ActionResult AddBeast()
