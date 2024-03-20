@@ -260,6 +260,7 @@
     <Content Include="Views\Pharmacists\Order.cshtml" />
     <Content Include="Views\Pharmacists\ProductsSearchXDate.cshtml" />
     <Content Include="Views\Pharmacists\ProductsSearchXCodFisc.cshtml" />
+    <Content Include="Views\Shared\Partials\_HospitalizationResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

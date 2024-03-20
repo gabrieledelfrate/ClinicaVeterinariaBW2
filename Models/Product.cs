@@ -25,6 +25,8 @@ namespace ClinicaVeterinaria.Models
         [StringLength(50)]
         public string Descrizione { get; set; }
 
+        public decimal Prezzo { get; set; }
+
         public int SupplierID { get; set; }
 
         public int DrawerID { get; set; }

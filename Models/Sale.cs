@@ -15,6 +15,8 @@ namespace ClinicaVeterinaria.Models
         [Required]
         [StringLength(16)]
         public string CodiceFiscale { get; set; }
+        [StringLength(8)]
+        public string NumeroRicetta { get; set; }
 
         public int ExaminationID { get; set; }
 
