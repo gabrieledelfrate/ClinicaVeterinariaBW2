@@ -1,0 +1,182 @@
+﻿@model ClinicaVeterinaria.Models.Beast
+
+<h2 class="text-center mb-5">Dettagli Animale</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <!-- Colonna sinistra - Informazioni Animale -->
+        <div class="col-lg-4 mb-5">
+            <div class="card shadow-lg">
+                <img src="@Model.Foto" alt="Immagine dell'animale" class="card-img-top rounded-circle mx-auto d-block img-thumbnail shadow" style=" object-fit: none; width: 22vw; height: 44vh; margin-top: -5rem;">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">@Model.Nome</h3>
+                    <dl class="row">
+                        <dt class="col-sm-5">Data di registrazione</dt>
+                        <dd class="col-sm-7">@Model.DataRegistrazione.ToShortDateString()</dd>
+
+                        <dt class="col-sm-5">Proprietario</dt>
+                        <dd class="col-sm-7">@Model.Proprietario</dd>
+
+                        <dt class="col-sm-5">Codice Fiscale</dt>
+                        <dd class="col-sm-7">@Model.CodiceFiscale</dd>
+
+                        <dt class="col-sm-5">Email</dt>
+                        <dd class="col-sm-7">@Model.EmailProprietario</dd>
+
+                        <dt class="col-sm-5">Cellulare</dt>
+                        <dd class="col-sm-7">@Model.CellulareProprietario</dd>
+
+                        <dt class="col-sm-5">Patologie Pregresse</dt>
+                        <dd class="col-sm-7">@Model.PatologiePregresse</dd>
+
+                        @if (@Model.Microchip == true)
+                        {
+                            <dt class="col-sm-5">Microchip Codice</dt>
+                            <dd class="col-sm-7">@Model.MicrochipCodice</dd>
+                        }
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Colonna centrale - Esami -->
+        <div class="col-lg-4 mb-5">
+            <a href="/Doctors/AddExamination" class="btn btn-success btn-lg mb-4">Aggiungi Esame</a>
+
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Esami</h3>
+                </div>
+                <div class="card-body ">
+                    @if (Model.Examinations != null && Model.Examinations.Any())
+                    {
+                        int examIndex = 0;
+                        foreach (var exam in Model.Examinations)
+                        {
+                            var modalId = $"detailsModal{examIndex}";
+
+                            <div class="d-flex align-items-center gap-3 ms-5 mb-3">
+                                <div>
+                                    <h5 class="fw-bold text-success">Giorno della visita</h5>
+                                    <p>@exam.DataVisita.ToShortDateString()</p>
+                                </div>
+
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@modalId">
+                                    Dettagli
+                                </button>
+                            </div>
+
+                            <div class="modal fade" id="@modalId" tabindex="-1" aria-labelledby="@exam.BeastID" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="@exam.BeastID">Dettagli @exam.Beast.Nome</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <dl class="row">
+                                                <dt class="col-sm-5">Patologie Riscontrate</dt>
+                                                <dd class="col-sm-7">@exam.PatologieRiscontrate</dd>
+
+                                                <dt class="col-sm-5">Numero Ricetta</dt>
+                                                <dd class="col-sm-7">@exam.NumeroRicetta</dd>
+
+                                                <dt class="col-sm-5">Ricetta</dt>
+                                                <dd class="col-sm-7">@exam.Ricetta</dd>
+
+                                                <dt class="col-sm-5">Prezzo</dt>
+                                                <dd class="col-sm-7">@exam.Prezzo</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            examIndex++;
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">Non ci sono esami riscontrati.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Ricoveri colonna destra -->
+        <div class="col-md-4">
+
+            <a href="/Doctors/AddHospitalization" class="btn btn-success btn-lg mb-4">Aggiungi Ricovero</a>
+
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Ricoveri</h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.Hospitalizations != null && Model.Hospitalizations.Any())
+                    {
+                        int hospitalizationIndex = 0;
+                        foreach (var hospitalization in Model.Hospitalizations)
+                        {
+                            var modalId = $"hospitalizationModal{hospitalizationIndex}";
+
+                            <div class="d-flex align-items-center gap-3 ms-5 mb-3">
+                                <div>
+                                    <h5 class="fw-bold  text-success">Data Iniziale</h5>
+                                    <p class="mb-0">@hospitalization.DataInizioRicovero.ToShortDateString()</p>
+                                </div>
+
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@modalId">
+                                    Dettagli
+                                </button>
+                            </div>
+
+                            <div class="modal fade" id="@modalId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="hospitalizationModalLabel@hospitalizationIndex" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="hospitalizationModalLabel@hospitalizationIndex">Dettagli Ricovero</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <dl class="row">
+                                                <dt class="col-sm-5">Data Iniziale</dt>
+                                                <dd class="col-sm-7">@hospitalization.DataInizioRicovero.ToShortDateString()</dd>
+
+                                                <dt class="col-sm-5">Data Finale</dt>
+                                                <dd class="col-sm-7">@hospitalization.DataFineRicovero.ToShortDateString()</dd>
+
+                                                <dt class="col-sm-5">Prognosi</dt>
+                                                <dd class="col-sm-7">@hospitalization.Prognosi</dd>
+
+                                                <dt class="col-sm-5">Dottore</dt>
+                                                <dd class="col-sm-7">@hospitalization.Doctor.Nome</dd>
+
+                                                <dt class="col-sm-5">Prezzo Giornaliero</dt>
+                                                <dd class="col-sm-7">@hospitalization.CostoGiornalieroRicovero</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            hospitalizationIndex++;
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">Non ci sono ricoveri riscontrati.</p>
+                    }
+                </div>
+            </div>
+        </div>
+

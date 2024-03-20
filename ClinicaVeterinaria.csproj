@@ -251,15 +251,12 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\HospitalizationsSearch.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
-    <Content Include="Views\Doctors\ActiveHospitalizations.cshtml" />
-    <Content Include="Views\Doctors\AddBeast.cshtml" />
-    <Content Include="Views\Doctors\BeastDetails.cshtml" />
-    <Content Include="Views\Doctors\AddExaminations.cshtml" />
-    <Content Include="Views\Doctors\AddHospitalization.cshtml" />
     <Content Include="Views\Pharmacists\Index.cshtml" />
     <Content Include="Views\Pharmacists\Order.cshtml" />
     <Content Include="Views\Pharmacists\ProductsSearchXDate.cshtml" />
     <Content Include="Views\Pharmacists\ProductsSearchXCodFisc.cshtml" />
+    <Content Include="Views\Doctors\AddExamination.cshtml" />
+    <Content Include="Views\Doctors\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
