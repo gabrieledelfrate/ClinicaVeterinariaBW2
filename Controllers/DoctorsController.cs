@@ -1,10 +1,9 @@
-﻿using ClinicaVeterinaria.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ClinicaVeterinaria.Models;
 
 namespace ClinicaVeterinaria.Controllers
 {
@@ -12,11 +11,17 @@ namespace ClinicaVeterinaria.Controllers
     {
         private DBContext db = new DBContext();
 
-        // Inizio Codice Pes
-
-        public ActionResult Index()
+        //Inizio Codice Pes
+        public ActionResult Index(string search)
         {
             var beasts = db.Beasts.ToList();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                beasts = beasts.Where(b => b.Nome.Contains(search) || b.MicrochipCodice == search).ToList();
+            }
+
+            ViewBag.SearchString = search;
             return View(beasts);
         }
 
@@ -24,7 +29,6 @@ namespace ClinicaVeterinaria.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -55,7 +59,6 @@ namespace ClinicaVeterinaria.Controllers
             return View(beast);
         }
 
-
-        // Fine Codice Pes
+        //Fine Codice Pes
     }
 }

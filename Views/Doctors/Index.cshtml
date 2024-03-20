@@ -5,10 +5,18 @@
 }
 
 <div class="container">
-    <div class="d-flex justify-content-between">
-        <h2>Lista Animali</h2>
-        <a href="@Url.Action("AddBeast", "Doctors")" class="btn btn-success mb-3">Aggiungi</a>
+    @*Codice Inzio Pes*@
+    <h2>Lista Bestie</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <form method="get" action="@Url.Action("Index", "Doctors")" class="d-flex align-items-center" style="width:18rem">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" placeholder="Cerca per nome o microchip" value="@ViewBag.SearchString" />
+                <button type="submit" class="btn btn-primary">Cerca</button>
+            </div>
+        </form>
+        <a href="@Url.Action("AddBeast", "Doctors")" class="btn btn-success">Aggiungi</a>
     </div>
+    @*Codice Fine Pes*@
     <table class="table table-striped">
         <tbody>
             @foreach (var beast in Model)
