@@ -248,7 +248,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\LoginFarmacia.cshtml" />
     <Content Include="Views\Home\HospitalizationsSearch.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\Doctors\ActiveHospitalizations.cshtml" />
@@ -260,6 +260,7 @@
     <Content Include="Views\Pharmacists\Order.cshtml" />
     <Content Include="Views\Pharmacists\ProductsSearchXDate.cshtml" />
     <Content Include="Views\Pharmacists\ProductsSearchXCodFisc.cshtml" />
+    <Content Include="Views\Pharmacists\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,7 +1,54 @@
-﻿
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Product>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cerca Prodotti";
 }
 
-<h2>Index</h2>
+<h2>Cerca Prodotti</h2>
 
+@using (Html.BeginForm("Index", "Pharmacists", FormMethod.Get, new { @class = "form-inline" }))
+{
+    <div class="input-group mb-3">
+        @Html.TextBox("search", null, new { @class = "form-control", @placeholder = "Nome Prodotto" })
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Cerca</button>
+        </div>
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">Prodotto non trovato.</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrizione</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Descrizione)</td>
+                    <td>
+                        @Html.ActionLink("Aggiungi al resoconto", "Resoconto", new { id = item.ProductID }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Dettagli", "Details", new { id = item.ProductID }, new { @class = "btn btn-info" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
