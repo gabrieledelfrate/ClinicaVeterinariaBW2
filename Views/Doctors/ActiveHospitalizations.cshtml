@@ -1,21 +1,23 @@
 ﻿@model List<ClinicaVeterinaria.Models.Hospitalization>
 
-<div class="search-and-button d-flex justify-content-end">
-    <button class="btn btn-success" onclick="openContabilizzazioneModal()">Contabilizzazione</button>
-</div>
-
-<div class="container">
+<div class="container" style="width:50rem">
     <div class="d-flex flex-column">
         <div class="my-4">
-            <h2>Ricoveri Attivi</h2>
-            <table class="table table-striped">
+            <div class="d-flex justify-content-between border-bottom border-success pb-3">
+                <h2 class="text-success">Ricoveri Attivi</h2>
+                <div>
+                    <button class="btn btn-success" onclick="openContabilizzazioneModal()">Contabilizzazione</button>
+                </div>
+            </div>
+
+            <table class="text-center table table-bordered mt-3 border border-success BordiTabella">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nome Animale</th>
                         <th>Inizio Ricovero</th>
                         <th>Prognosi</th>
-                        <th></th>
+                        <th>Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,21 +28,21 @@
                             <td>@hospitalization.Beast.Nome</td>
                             <td>@hospitalization.DataInizioRicovero.ToString("yyyy-MM-dd")</td>
                             <td>@hospitalization.Prognosi</td>
-                            <td>
-                                <div class="justify-content-end">
-                                    <button class="btn btn-primary" onclick="openModal('@hospitalization.HospitalizationID')">Dettaglio Ricovero</button>
-                                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("Details", "Doctors", new { id = hospitalization.BeastID } )'">Dettaglio Bestia</button> @*TODO*@
-                                </div> 
+                             
+                            <td >
+                                <button class="btn btn-success mx-1 my-1" onclick="openModal('@hospitalization.HospitalizationID')">Dettaglio Ricovero</button>
+                                <button class="btn btn-success mx-1 my-1" onclick="window.location.href='@Url.Action("Details", "Doctors", new { id = hospitalization.BeastID } )'">Dettaglio Bestia</button> @*TODO*@
+
                             </td>
        
-            </tr>
+                       </tr>
         }
                     </tbody>
                     </table>
                 </div>
         <div>
-            <h2>Checkout Ricoveri</h2>
-            <table class="table table-striped">
+            <h2 class="text-success border-bottom border-success pb-3">Checkout Ricoveri</h2>
+            <table class="table table-striped mt-3">
                 <thead>
                     <tr>
                         <th>Nome Animale</th>
@@ -71,8 +73,8 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Dettagli Ricovero</h5>
-                <button type="button" class="btn-close bg-danger" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+                <h2 class="modal-title text-success" id="exampleModalLabel">Dettagli Ricovero</h2>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
                 </button>
             </div>
             <div class="modal-body">
@@ -82,7 +84,6 @@
                 <p><strong>Costo Giornaliero:</strong> <span id="dailyCost"></span> €</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Chiudi</button>
                 <button type="button" class="btn btn-success" onclick="checkout()">Check-out</button>
             </div>
         </div>
@@ -95,8 +96,8 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Dettagli Ricoveri Attivi</h5>
-                <button type="button" class="btn-close bg-danger" data-dismiss="modal" aria-label="Close" onclick="closeContabilizzazioneModal()">
+                <h2 class="modal-title text-success" id="exampleModalLabel">Dettagli Ricoveri Attivi</h2>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" onclick="closeContabilizzazioneModal()">
                 </button>
             </div>
             <div class="modal-body">
@@ -157,9 +158,6 @@
                         }
                     </tbody>
                 </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeContabilizzazioneModal()">Chiudi</button>
             </div>
         </div>
     </div>
