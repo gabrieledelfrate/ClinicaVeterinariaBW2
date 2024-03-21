@@ -18,6 +18,7 @@
             <th>Prezzo</th>
         </tr>
     </thead>
+    <p>Totale speso: @String.Format("{0:C}", Model.PrezzoTotale)</p>
     <tbody>
         @foreach (var vendita in Model.Vendite)
         {
@@ -29,4 +30,4 @@
         }
     </tbody>
 </table>
-<p>Totale speso: @String.Format("{0:C}", Model.PrezzoTotale)</p>
+
