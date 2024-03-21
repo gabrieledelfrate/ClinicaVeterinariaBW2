@@ -147,15 +147,20 @@
 
         if (smarritoCheckbox.checked) {
             proprietarioInpunt.disabled = true;
+            proprietarioInpunt.value = "";
             codiceFiscaleInput.disabled = true;
+            codiceFiscaleInput.value = "";
             emailProprietarioInpunt.disabled = true;
+            emailProprietarioInpunt.value = "";
             cellulareProprietarioInpunt.disabled = true;
+            cellulareProprietarioInpunt.value = "";
             patologiePregresse.disabled = true;
+            patologiePregresse.value = "";
         } else {
             proprietarioInpunt.disabled = false;
             codiceFiscaleInput.disabled = false;
             emailProprietarioInpunt.disabled = false;
-            cellualreProprietarioInpunt.disabled = false;
+            cellulareProprietarioInpunt.disabled = false;
             patologiePregresse.disabled = false;
         }
     }
