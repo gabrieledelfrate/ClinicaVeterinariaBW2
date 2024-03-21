@@ -11,10 +11,10 @@ namespace ClinicaVeterinaria.Controllers
     {
         private DBContext db = new DBContext();
 
-        
+
         public ActionResult Index(string search)
         {
-           
+
 
             IQueryable<Product> products = db.Products;
 
@@ -43,7 +43,7 @@ namespace ClinicaVeterinaria.Controllers
         public ActionResult AddToReport(int id)
         {
             var product = db.Products.Find(id);
-            if(product == null)
+            if (product == null)
             {
                 return HttpNotFound();
             }
@@ -160,7 +160,7 @@ namespace ClinicaVeterinaria.Controllers
 
             summaryViewModel.PrezzoTotale = summaryViewModel.Vendite.Sum(v => v.Prezzo);
             summaryViewModel.NumeroRicetta = numeroRicetta;
-            summaryViewModel.PharmacistID= pharmacistId;
+            summaryViewModel.PharmacistID = pharmacistId;
             var pharmacist = db.Pharmacists.FirstOrDefault(p => p.PharmacistID == pharmacistId);
             summaryViewModel.NomeFarmacista = pharmacist != null ? pharmacist.Nome : "Nome non trovato";
 
