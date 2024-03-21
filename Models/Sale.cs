@@ -22,6 +22,8 @@ namespace ClinicaVeterinaria.Models
 
         public int PharmacistID { get; set; }
 
+        public string NumeroRicetta { get; set; }
+
         public virtual Examination Examination { get; set; }
 
         public virtual Pharmacist Pharmacist { get; set; }
