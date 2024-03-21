@@ -11,10 +11,10 @@ namespace ClinicaVeterinaria.Controllers
     {
         private DBContext db = new DBContext();
 
-        
+
         public ActionResult Index(string search)
         {
-           
+
 
             IQueryable<Product> products = db.Products;
 
@@ -43,7 +43,7 @@ namespace ClinicaVeterinaria.Controllers
         public ActionResult AddToReport(int id)
         {
             var product = db.Products.Find(id);
-            if(product == null)
+            if (product == null)
             {
                 return HttpNotFound();
             }
@@ -64,6 +64,7 @@ namespace ClinicaVeterinaria.Controllers
         {
             List<int> reportProductID = Session["ReportProducts"] as List<int>;
             List<Product> reportProducts = new List<Product>();
+            decimal totalPrice = 0;
 
             if (reportProductID != null)
             {
@@ -73,9 +74,12 @@ namespace ClinicaVeterinaria.Controllers
                     if (product != null)
                     {
                         reportProducts.Add(product);
+                        totalPrice += product.Prezzo;
                     }
                 }
             }
+
+            ViewBag.TotalPrice = totalPrice;
 
             var pharmacists = db.Pharmacists.Select(p => new
             {
@@ -102,7 +106,7 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout(string codiceFiscale, string numeroRicetta, int pharmacistId)
+        public ActionResult Checkout(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita)
         {
             List<int> reportProductIDs = Session["ReportProducts"] as List<int>;
             if (reportProductIDs != null && reportProductIDs.Count > 0)
@@ -117,6 +121,7 @@ namespace ClinicaVeterinaria.Controllers
                             ProductID = productId,
                             CodiceFiscale = codiceFiscale,
                             NumeroRicetta = numeroRicetta,
+                            DataVendita = dataVendita,
                             Prezzo = product.Prezzo,
                             PharmacistID = pharmacistId
                         };
@@ -132,13 +137,14 @@ namespace ClinicaVeterinaria.Controllers
                 var summaryViewModel = new CheckoutSummaryViewModel
                 {
                     NumeroRicetta = numeroRicetta,
-                    NomeFarmacista = nomeFarmacista
-                };
+                    NomeFarmacista = nomeFarmacista,
+                    DataVendita = dataVendita
+            };
 
                 Session["ReportProducts"] = null;
 
                 TempData["SuccessMessage"] = "Checkout completato con successo.";
-                return RedirectToAction("CheckoutSummary", new { codiceFiscale = codiceFiscale, numeroRicetta = numeroRicetta, pharmacistId = pharmacistId });
+                return RedirectToAction("CheckoutSummary", new { codiceFiscale = codiceFiscale, numeroRicetta = numeroRicetta, pharmacistId = pharmacistId, dataVendita = dataVendita });
             }
             else
             {
@@ -148,7 +154,7 @@ namespace ClinicaVeterinaria.Controllers
         }
 
 
-        public ActionResult CheckoutSummary(string codiceFiscale, string numeroRicetta, int pharmacistId)
+        public ActionResult CheckoutSummary(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita)
         {
             var summaryViewModel = new CheckoutSummaryViewModel();
 
@@ -159,20 +165,56 @@ namespace ClinicaVeterinaria.Controllers
                                         .ToList();
 
             summaryViewModel.PrezzoTotale = summaryViewModel.Vendite.Sum(v => v.Prezzo);
+            summaryViewModel.DataVendita = dataVendita;
             summaryViewModel.NumeroRicetta = numeroRicetta;
-            summaryViewModel.PharmacistID= pharmacistId;
+            summaryViewModel.PharmacistID = pharmacistId;
             var pharmacist = db.Pharmacists.FirstOrDefault(p => p.PharmacistID == pharmacistId);
             summaryViewModel.NomeFarmacista = pharmacist != null ? pharmacist.Nome : "Nome non trovato";
 
             return View(summaryViewModel);
         }
 
+
         public ActionResult AddNewProduct()
         {
             ViewBag.SupplierID = new SelectList(db.Suppliers, "SupplierID", "NomeAzienda");
             ViewBag.DrawerID = new SelectList(db.Drawers, "DrawerID", "DrawerID");
+   return View();
+        }
+        
+        public ActionResult MedicinaXCliente()
+        {
+            var proprietari = db.Beasts.Select(b => new
+            {
+                NomeProprietario = b.Proprietario,
+                CodiceFiscale = b.CodiceFiscale
+            }).Distinct().ToList();
+
+            ViewBag.Proprietari = new SelectList(proprietari, "CodiceFiscale", "NomeProprietario");
+
             return View();
         }
+        public ActionResult GetProdottiByCodiceFiscale(string codiceFiscale)
+        {
+            var vendite = db.Sales
+                            .Where(s => s.CodiceFiscale == codiceFiscale)
+                            .Select(s => s.ProductID)
+                            .Distinct()
+                            .ToList();
+
+            if (!vendite.Any())
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound, "Nessuna vendita registrata per il codice fiscale inserito.");
+            }
+
+            var prodotti = db.Products
+                             .Where(p => vendite.Contains(p.ProductID))
+                             .ToList();
+
+            return PartialView("_ProdottiByCodiceFiscale", prodotti);
+        }
+        public ActionResult Ricetta()
+        {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -189,6 +231,50 @@ namespace ClinicaVeterinaria.Controllers
             ViewBag.SupplierID = new SelectList(db.Suppliers, "SupplierID", "NomeAzienda", product.SupplierID);
             ViewBag.DrawerID = new SelectList(db.Drawers, "DrawerID", "DrawerID", product.DrawerID);
             return View(product);
+        }
+
+
+        public ActionResult Ricetta(string MicrochipCodice)
+        {
+            
+            var beast = db.Beasts.FirstOrDefault(b => b.MicrochipCodice == MicrochipCodice);
+
+            if (beast == null)
+            {
+                TempData["ErrorMessage"] = "Nessun animale trovato con questo codice microchip.";
+                return View();
+            }
+
+          
+            ViewBag.BeastID = beast.BeastID;
+
+            
+            var esami = db.Examinations
+                          .Where(e => e.BeastID == beast.BeastID)
+                          .OrderBy(e => e.DataVisita)
+                          .ToList();
+
+            return View(esami); 
+        }
+        public ActionResult MedicinaXData()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetMedicineByDate(DateTime dataVendita)
+        {
+            var productIds = db.Sales
+                                .Where(s => DbFunctions.TruncateTime(s.DataVendita) == dataVendita.Date)
+                                .Select(s => s.ProductID)
+                                .Distinct()
+                                .ToList();
+
+            var products = db.Products
+                             .Where(p => productIds.Contains(p.ProductID))
+                             .ToList();
+
+            return PartialView("_MedicineByDate", products);
         }
 
     }

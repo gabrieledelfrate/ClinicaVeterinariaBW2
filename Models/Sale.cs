@@ -22,7 +22,7 @@ namespace ClinicaVeterinaria.Models
 
         public int PharmacistID { get; set; }
 
-       
+        public DateTime DataVendita { get; set; }
 
         public virtual Pharmacist Pharmacist { get; set; }
 

@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Applicazione ASP.NET</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-7hUpOZrHbH6gj3JTG/As/SRTIDg4C3kZy3nDMeXNbOgNtqCL3KL9XDeIJmdHR8yYj5h2K3O/BZWl7EFKte9DEw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -26,7 +27,7 @@
                     {
                         @Html.ActionLink("ClinicaPerBestie", "Index", "Doctors", new { area = "" }, new { @class = "navbar-brand" })
                         <li>@Html.ActionLink("Bestie", "Index", "Doctors", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Ricoveri Attivi", "ActiveHospitalizations","Doctors", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Ricoveri Attivi", "ActiveHospitalizations", "Doctors", new { area = "" }, new { @class = "nav-link" })</li>
                     }
                     else if (folder == "pharmacists")
                     {
@@ -40,6 +41,21 @@
                     }
                 </ul>
             </div>
+            @if (Session["UserM"] != null)
+            {
+                <a class="me-5 text-white" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserM"]</a>
+            }
+            else if (Session["UserF"] != null)
+            {
+                <a class="me-5 text-white" href="/Doctors/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a> //TODO
+            }
+            @if (Request.Cookies[".ASPXAUTH"] != null)
+            {
+                <form action="@Url.Action("LogoutFarmacia", "Home")" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            }
         </div>
     </nav>
     <div class="container body-content">

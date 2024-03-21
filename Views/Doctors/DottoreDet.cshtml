@@ -1,0 +1,74 @@
+﻿@model ClinicaVeterinaria.Models.Doctor
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .card {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+    .card-title {
+        font-weight: 600;
+        color: #007bff;
+    }
+
+    dt {
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+
+    dd {
+        font-size: 1.1em;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+</style>
+
+<h2 class="text-center mb-5">Dettagli Dottore</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 mb-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">@Model.Nome @Model.Cognome</h3>
+                    <dl class="row">
+                        <dt class="col-sm-5">Data di Nascita</dt>
+                        <dd class="col-sm-7">@Model.DataNascita.ToShortDateString()</dd>
+
+                        <dt class="col-sm-5">Luogo di Nascita</dt>
+                        <dd class="col-sm-7">@Model.LuogoNascita</dd>
+
+                        <dt class="col-sm-5">Luogo di Residenza</dt>
+                        <dd class="col-sm-7">@Model.LuogoResidenza</dd>
+
+                        <dt class="col-sm-5">Codice Fiscale</dt>
+                        <dd class="col-sm-7">@Model.CodiceFiscale</dd>
+
+                        <dt class="col-sm-5">Matricola</dt>
+                        <dd class="col-sm-7">@Model.Matricola</dd>
+
+                        <dt class="col-sm-5">Email</dt>
+                        <dd class="col-sm-7">@Model.Email</dd>
+
+                        <dt class="col-sm-5">Password</dt>
+                        <dd class="col-sm-7">@Model.PasswordMedico</dd> 
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
