@@ -21,6 +21,7 @@ namespace ClinicaVeterinaria.Models
         public decimal Prezzo { get; set; }
 
         public int PharmacistID { get; set; }
+
         public DateTime DataVendita { get; set; }
 
         public virtual Pharmacist Pharmacist { get; set; }

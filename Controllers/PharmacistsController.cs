@@ -173,8 +173,86 @@ namespace ClinicaVeterinaria.Controllers
 
             return View(summaryViewModel);
         }
+        
+        public ActionResult MedicinaXCliente()
+        {
+            var proprietari = db.Beasts.Select(b => new
+            {
+                NomeProprietario = b.Proprietario,
+                CodiceFiscale = b.CodiceFiscale
+            }).Distinct().ToList();
 
+            ViewBag.Proprietari = new SelectList(proprietari, "CodiceFiscale", "NomeProprietario");
 
+            return View();
+        }
+        public ActionResult GetProdottiByCodiceFiscale(string codiceFiscale)
+        {
+            var vendite = db.Sales
+                            .Where(s => s.CodiceFiscale == codiceFiscale)
+                            .Select(s => s.ProductID)
+                            .Distinct()
+                            .ToList();
+
+            if (!vendite.Any())
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound, "Nessuna vendita registrata per il codice fiscale inserito.");
+            }
+
+            var prodotti = db.Products
+                             .Where(p => vendite.Contains(p.ProductID))
+                             .ToList();
+
+            return PartialView("_ProdottiByCodiceFiscale", prodotti);
+        }
+        public ActionResult Ricetta()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Ricetta(string MicrochipCodice)
+        {
+            
+            var beast = db.Beasts.FirstOrDefault(b => b.MicrochipCodice == MicrochipCodice);
+
+            if (beast == null)
+            {
+                TempData["ErrorMessage"] = "Nessun animale trovato con questo codice microchip.";
+                return View();
+            }
+
+          
+            ViewBag.BeastID = beast.BeastID;
+
+            
+            var esami = db.Examinations
+                          .Where(e => e.BeastID == beast.BeastID)
+                          .OrderBy(e => e.DataVisita)
+                          .ToList();
+
+            return View(esami); 
+        }
+        public ActionResult MedicinaXData()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetMedicineByDate(DateTime dataVendita)
+        {
+            var productIds = db.Sales
+                                .Where(s => DbFunctions.TruncateTime(s.DataVendita) == dataVendita.Date)
+                                .Select(s => s.ProductID)
+                                .Distinct()
+                                .ToList();
+
+            var products = db.Products
+                             .Where(p => productIds.Contains(p.ProductID))
+                             .ToList();
+
+            return PartialView("_MedicineByDate", products);
+        }
 
 
     }

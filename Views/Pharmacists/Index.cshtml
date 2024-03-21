@@ -5,6 +5,9 @@
 }
 
 <h2>Cerca Prodotti</h2>
+<div class="text-right">
+    <a href="@Url.Action("Ricetta", "Pharmacists")" class="btn btn-success my-2 float-right">Ricerca Ricetta</a>
+</div>
 
 @using (Html.BeginForm("Index", "Pharmacists", FormMethod.Get, new { @class = "form-inline" }))
 {
