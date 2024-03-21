@@ -52,7 +52,7 @@
 
                     <div class="mt-4">
                         <label class="form-label">Numero Ricetta</label>
-                        @Html.EditorFor(model => model.NumeroRicetta, new { htmlAttributes = new { @class = "form-control border-success" } })
+                        @Html.EditorFor(model => model.NumeroRicetta, new { htmlAttributes = new { @class = "form-control border-success", @type = "number", @pattern = "[0-9]*", @min = "0" } })
                         @Html.ValidationMessageFor(model => model.NumeroRicetta, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="me-4 col-3">
                     <div class="mt-4">
                         <label class="form-label">Prezzo</label>
-                        @Html.TextBoxFor(model => model.Prezzo, new { @class = "form-control border-success", type = "number", step = "1.00" })
+                        @Html.TextBoxFor(model => model.Prezzo, new { @class = "form-control border-success", type = "number", step = "1.00", @min = "0" })
                         @Html.ValidationMessageFor(model => model.Prezzo, "", new { @class = "text-danger" })
                     </div>
 
