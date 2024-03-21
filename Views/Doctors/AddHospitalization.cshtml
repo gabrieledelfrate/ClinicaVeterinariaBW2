@@ -30,7 +30,7 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.CostoGiornalieroRicovero)
-        @Html.TextBoxFor(model => model.CostoGiornalieroRicovero, "{0:n}", new { @class = "form-control", @type = "number", @step = "0.01" })
+        @Html.TextBoxFor(model => model.CostoGiornalieroRicovero, "{0:n}", new { @class = "form-control", @type = "number", @step = "1.00" })
         @Html.ValidationMessageFor(model => model.CostoGiornalieroRicovero, "", new { @class = "text-danger" })
     </div>
      
