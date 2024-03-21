@@ -115,11 +115,6 @@ namespace ClinicaVeterinaria.Models
                 .Property(e => e.Prezzo)
                 .HasPrecision(10, 2);
 
-            modelBuilder.Entity<Examination>()
-                .HasMany(e => e.Sales)
-                .WithRequired(e => e.Examination)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<Hospitalization>()
                 .Property(e => e.Prognosi)
                 .IsUnicode(false);

@@ -15,6 +15,8 @@
         </div>
     </div>
 }
+@Html.ActionLink("Ordine", "Orders", "Pharmacists", new { @class = "btn btn-warning" })
+
 
 @if (TempData["SuccessMessage"] != null)
 {
@@ -34,6 +36,7 @@ else
             <tr>
                 <th>Nome</th>
                 <th>Descrizione</th>
+                <th>Prezzo</th>
                 <th></th>
             </tr>
         </thead>
@@ -43,8 +46,9 @@ else
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                     <td>@Html.DisplayFor(modelItem => item.Descrizione)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Prezzo)€</td>
                     <td>
-                        @Html.ActionLink("Aggiungi al resoconto", "Resoconto", new { id = item.ProductID }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Aggiungi al resoconto", "AddToReport", new { id = item.ProductID }, new { @class = "btn btn-success" })
                         @Html.ActionLink("Dettagli", "Details", new { id = item.ProductID }, new { @class = "btn btn-info" })
                     </td>
                 </tr>
