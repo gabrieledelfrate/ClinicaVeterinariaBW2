@@ -31,9 +31,12 @@ namespace ClinicaVeterinaria.Models
 
         public int DrawerID { get; set; }
 
+        public decimal Prezzo { get; set; }
+
         public virtual Drawer Drawer { get; set; }
 
         public virtual Supplier Supplier { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sales { get; set; }

@@ -1,22 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ClinicaVeterinaria.Models;
 using System.Data.Entity;
 using System.Net;
+using System.Web.Security;
+using ClinicaVeterinaria.Models;
+
 
 namespace ClinicaVeterinaria.Controllers
 {
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
             return View();
         }
+
+        //Lorenzo-Daniel
+        public ActionResult LoginFarmacia()
+        {
+          
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
         public ActionResult Login()
         {
             return View();
@@ -25,12 +37,7 @@ namespace ClinicaVeterinaria.Controllers
         public ActionResult HospitalizationsSearch()
         {
             return View();
-        }
-
-        public ActionResult LoginPharmacist()
-        {
-            return View();
-        }
+        }       
 
         private DBContext db = new DBContext();
 
@@ -62,5 +69,35 @@ namespace ClinicaVeterinaria.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken] 
+        public ActionResult LoginFarmacia(string email, string passwordFarmacista)
+        {
+          
+            using (var db = new DBContext())
+            {
+                var pharmacist = db.Pharmacists.FirstOrDefault(p => p.Email == email && p.PasswordFarmacista == passwordFarmacista);
+
+                if (pharmacist != null)
+                {
+                    FormsAuthentication.SetAuthCookie(email, false);
+                    return RedirectToAction("Index", "Pharmacists");
+                }
+                else
+                {
+                    ViewBag.Error = "Credenziali non valide";
+                    return View();
+                }
+            }
+        }
+
+        
+        public ActionResult LogoutFarmacia()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index");
+        }
+        //Lorenzo-Daniel
     }
 }

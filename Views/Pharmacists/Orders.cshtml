@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Product>
+
+@{
+    ViewBag.Title = "Resoconto";
+}
+
+<h2>Resoconto</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">Nessun prodotto nel resoconto.</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrizione</th>
+                <th>Prezzo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Descrizione)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Prezzo)€</td>
+                    <td>
+                        @Html.ActionLink("Rimuovi", "RemoveFromReport", new { id = item.ProductID }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@using (Html.BeginForm("Checkout", "Pharmacists", FormMethod.Post))
+{
+    <div>
+        <label for="codiceFiscale">Codice Fiscale:</label>
+        <input type="text" id="codiceFiscale" name="codiceFiscale" required />
+    </div>
+    <div>
+        <label for="numeroRicetta">Numero Ricetta:</label>
+        <input type="text" id="numeroRicetta" name="numeroRicetta" required />
+    </div>
+    <div>
+        <label for="pharmacistId">Farmacista:</label>
+        @Html.DropDownList("pharmacistId", (SelectList)ViewBag.Pharmacists, "Seleziona un farmacista", new { @class = "form-control" })
+    </div>
+    <input type="submit" value="Checkout" class="btn btn-primary" />
+}

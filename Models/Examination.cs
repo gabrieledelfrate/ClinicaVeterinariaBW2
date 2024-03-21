@@ -8,11 +8,6 @@ namespace ClinicaVeterinaria.Models
 
     public partial class Examination
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Examination()
-        {
-            Sales = new HashSet<Sale>();
-        }
 
         public int ExaminationID { get; set; }
 
@@ -39,7 +34,5 @@ namespace ClinicaVeterinaria.Models
 
         public virtual Doctor Doctor { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

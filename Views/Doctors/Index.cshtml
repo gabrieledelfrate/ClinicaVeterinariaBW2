@@ -1,7 +1,44 @@
-﻿
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Beast>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
+<div class="container">
+    @*Codice Inzio Pes*@
+    <h2>Lista Bestie</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <form method="get" action="@Url.Action("Index", "Doctors")" class="d-flex align-items-center" style="width:18rem">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" placeholder="Cerca per nome o microchip" value="@ViewBag.SearchString" />
+                <button type="submit" class="btn btn-primary">Cerca</button>
+            </div>
+        </form>
+        <a href="@Url.Action("AddBeast", "Doctors")" class="btn btn-success">Aggiungi</a>
+    </div>
+    @*Codice Fine Pes*@
+    <table class="table table-striped">
+        <tbody>
+            @foreach (var beast in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-auto">
+                                <img src="@beast.Foto" alt="Foto" style="max-width: 100px; max-height: 100px;" />
+                            </div>
+                            <div class="col">
+                                <div class="d-flex align-items-center">
+                                    <span>@beast.Nome</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-end">
+                        <a href="@Url.Action("Details", "Doctors", new { id = beast.BeastID })" class="btn btn-info">Dettagli</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
