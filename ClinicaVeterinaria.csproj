@@ -306,6 +306,7 @@
     <Content Include="Views\Doctors\ActiveHospitalizations.cshtml" />
     <Content Include="Views\Doctors\AddBeast.cshtml" />
     <Content Include="Views\Doctors\AddHospitalization.cshtml" />
+    <Content Include="Views\Pharmacists\AddNewProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

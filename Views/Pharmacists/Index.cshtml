@@ -16,6 +16,7 @@
     </div>
 }
 @Html.ActionLink("Ordine", "Orders", "Pharmacists", new { @class = "btn btn-warning" })
+@Html.ActionLink("Aggiungi Nuovo Prodotto", "AddNewProduct", "Pharmacists", new { @class = "btn btn-success" })
 
 
 @if (TempData["SuccessMessage"] != null)

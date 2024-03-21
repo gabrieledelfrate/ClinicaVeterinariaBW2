@@ -166,5 +166,30 @@ namespace ClinicaVeterinaria.Controllers
 
             return View(summaryViewModel);
         }
+
+        public ActionResult AddNewProduct()
+        {
+            ViewBag.SupplierID = new SelectList(db.Suppliers, "SupplierID", "NomeAzienda");
+            ViewBag.DrawerID = new SelectList(db.Drawers, "DrawerID", "DrawerID");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddNewProduct([Bind(Include = "ProductID,Nome,Descrizione,SupplierID,DrawerID,Prezzo")] Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Products.Add(product);
+                db.SaveChanges();
+                TempData["SuccessMessage"] = "Farmaco aggiunto con successo.";
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.SupplierID = new SelectList(db.Suppliers, "SupplierID", "NomeAzienda", product.SupplierID);
+            ViewBag.DrawerID = new SelectList(db.Drawers, "DrawerID", "DrawerID", product.DrawerID);
+            return View(product);
+        }
+
     }
 }
