@@ -306,6 +306,7 @@
     <Content Include="Views\Doctors\ActiveHospitalizations.cshtml" />
     <Content Include="Views\Doctors\AddBeast.cshtml" />
     <Content Include="Views\Doctors\AddHospitalization.cshtml" />
+    <Content Include="Views\Pharmacists\AddNewProduct.cshtml" />
     <Content Include="Views\Home\LoginDoctor.cshtml" />
     <Content Include="Views\Doctors\DottoreDet.cshtml" />
     <Content Include="Views\Doctors\FarmacistaDet.cshtml" />
