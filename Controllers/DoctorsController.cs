@@ -15,6 +15,8 @@ namespace ClinicaVeterinaria.Controllers
         private DBContext db = new DBContext();
         // GET: Doctors
         // CODICE MARCO SILVERI
+
+        [HttpGet]
         public ActionResult AddExamination()
         {
             var Bestie = db.Beasts.ToList();
