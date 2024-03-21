@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Xml.Linq;
+using System.Drawing;
 
 namespace ClinicaVeterinaria.Controllers
 {
@@ -21,7 +22,7 @@ namespace ClinicaVeterinaria.Controllers
         private DBContext db = new DBContext();
 
 
-        //Inizio Codice Pes
+        [HttpGet]
         public ActionResult Index(string search)
         {
             var beasts = db.Beasts.ToList();
@@ -96,9 +97,6 @@ namespace ClinicaVeterinaria.Controllers
 
             return View();
         }
-
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -188,25 +186,35 @@ namespace ClinicaVeterinaria.Controllers
         {
             try
             {
+                ViewBag.DoctorList = new SelectList(db.Doctors.ToList(), "DoctorID", "Nome");
+                ViewBag.BeastList = new SelectList(db.Beasts.ToList(), "BeastID", "Nome");
+   
+                if (hospitalization.DoctorID <= 0)
+                {
+                    ModelState.AddModelError("DoctorID", "La selezione del dottore è obbligatoria.");
+                }
+                if (hospitalization.BeastID <= 0)
+                {
+                    ModelState.AddModelError("BeastID", "La selezione della Bestia è obbligatoria.");
+                }
                 if (ModelState.IsValid)
                 {
                     db.Hospitalizations.Add(hospitalization);
                     db.SaveChanges();
-                    ViewBag.Message = "Ricovero creato con succcesso!";
+                    TempData["message"] = "Ricovero creato con succcesso!";
                     return RedirectToAction("Details", new { id = hospitalization.BeastID });
                 }
+                else
+                {
+                    TempData["messageError"] = "Errore nella compilazione del ricovero!";
+                }
+                return View(hospitalization);
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "Si é verificato un errore durante la creazione del ricovero ");
+                ModelState.AddModelError("", $"Si è verificato un errore durante la creazione del ricovero: {ex.Message}");
             }
-            var userID = Convert.ToInt32(User.Identity.Name);
-            hospitalization.BeastID = userID;
-
-            db.Hospitalizations.Add(hospitalization);
-            db.SaveChanges();
-            ViewBag.Message = "Ricovero creato con successo!";
-            return RedirectToAction("ActiveHospitalizations", "Doctors");
+            return View(hospitalization);
         }
 
         public ActionResult ActiveHospitalizations()

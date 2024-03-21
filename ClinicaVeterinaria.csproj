@@ -309,6 +309,11 @@
     <Content Include="Views\Home\LoginDoctor.cshtml" />
     <Content Include="Views\Doctors\DottoreDet.cshtml" />
     <Content Include="Views\Doctors\FarmacistaDet.cshtml" />
+    <Content Include="Views\Pharmacists\MedicinaXCliente.cshtml" />
+    <Content Include="Views\Pharmacists\_ProdottiByCodiceFiscale.cshtml" />
+    <Content Include="Views\Pharmacists\Ricetta.cshtml" />
+    <Content Include="Views\Pharmacists\MedicinaXData.cshtml" />
+    <Content Include="Views\Pharmacists\_MedicineByDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
