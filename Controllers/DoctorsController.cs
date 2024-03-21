@@ -33,6 +33,7 @@ namespace ClinicaVeterinaria.Controllers
             }
 
             ViewBag.SearchString = search;
+            ViewBag.NoResults = beasts.Count == 0;
             return View(beasts);
         }
         [HttpGet]

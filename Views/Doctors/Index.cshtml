@@ -16,7 +16,13 @@
         <a href="@Url.Action("AddBeast", "Doctors")" class="btn btn-success mt-2">Aggiungi</a>
     </div>
 
-        @foreach (var beast in Model)
+    @if (ViewBag.NoResults)
+    {
+        <p style="font-size:3em">Nessun risultato trovato.</p>
+    }
+    else
+    {
+        foreach (var beast in Model)
         {
             <div class="card mb-3 p-0 border-success">
                 <div class="d-flex">
@@ -51,5 +57,5 @@
                 <a href="@Url.Action("Details", "Doctors", new { id = beast.BeastID })" class="btn btn-success BottoneCard">Cartella clinica</a>
             </div>
         }
- 
-</div>
+    }
+    </div>
