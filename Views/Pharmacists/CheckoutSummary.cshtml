@@ -1,0 +1,30 @@
+﻿@model ClinicaVeterinaria.Models.CheckoutSummaryViewModel
+
+<h2>Riepilogo Checkout</h2>
+
+<h3>Informazioni sull'animale e Proprietario</h3>
+<p>Nome Animale: @Model.Animale.Nome</p>
+<p>Nome Proprietario: @Model.Animale.Proprietario</p>
+<p>Codice Fiscale: @Model.Animale.CodiceFiscale</p>
+<p>Numero Ricetta: @Model.NumeroRicetta</p>
+<p>Nome Farmacista: @Model.NomeFarmacista</p>
+
+<h3>Prodotti Acquistati</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Prodotto</th>
+            <th>Prezzo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vendita in Model.Vendite)
+        {
+            <tr>
+                <td>@vendita.Product.Nome</td>
+                <td>@String.Format("{0:C}", vendita.Prezzo)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>Prezzo Totale: @String.Format("{0:C}", Model.PrezzoTotale)</p>
