@@ -1,7 +1,7 @@
 
-﻿using System;
+using System;
 using System.IO;
-﻿using ClinicaVeterinaria.Models;
+using ClinicaVeterinaria.Models;
 using Microsoft.Ajax.Utilities;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace ClinicaVeterinaria.Controllers
 {
- // inizio codice MG
+    // inizio codice MG
     public class DoctorsController : Controller
     {
         private DBContext db = new DBContext();
@@ -30,17 +30,6 @@ namespace ClinicaVeterinaria.Controllers
 
             ViewBag.SearchString = search;
             return View(beasts);
-        }
-
-
-        public ActionResult AddHospitalization()
-        {
-            var beasts = db.Beasts.ToList();
-            var doctors = db.Doctors.ToList();
-            ViewBag.BeastList = new SelectList(beasts, "BeastID", "Nome");
-            ViewBag.DoctorList = new SelectList(doctors, "DoctorID", "Nome");
-
-            return View();
         }
 
         [HttpPost]
@@ -73,6 +62,18 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         //Fine Codice Pes
+        [HttpGet]
+        public ActionResult AddHospitalization()
+        {
+            var beasts = db.Beasts.ToList();
+            var doctors = db.Doctors.ToList();
+            ViewBag.BeastList = new SelectList(beasts, "BeastID", "Nome");
+            ViewBag.DoctorList = new SelectList(doctors, "DoctorID", "Nome");
+
+            return View();
+        }
+
+        [HttpPost]
         public ActionResult AddHospitalization(Hospitalization hospitalization)
         {
             try
@@ -94,13 +95,13 @@ namespace ClinicaVeterinaria.Controllers
 
             db.Hospitalizations.Add(hospitalization);
             db.SaveChanges();
-            ViewBag.Message = "Ricovero creato con succeso!";
+            ViewBag.Message = "Ricovero creato con successo!";
             return RedirectToAction("ActiveHospitalizations", "Doctors");
         }
-        
+
         public ActionResult ActiveHospitalizations()
         {
-          DateTime currentDate = DateTime.Now;
+            DateTime currentDate = DateTime.Now;
 
             var allHospitalizations = db.Hospitalizations.ToList();
             return View(allHospitalizations);
@@ -124,7 +125,7 @@ namespace ClinicaVeterinaria.Controllers
                 return HttpNotFound();
             }
         }
-        
+
         [HttpPost]
         public ActionResult CheckoutHospitalization(int id)
         {
@@ -140,8 +141,8 @@ namespace ClinicaVeterinaria.Controllers
                 return HttpNotFound();
             }
         }
-        
-            [HttpPost]
+
+        [HttpPost]
         public async Task<ActionResult> ContabilizzazioneRicoveriAsincrona()
         {
             try

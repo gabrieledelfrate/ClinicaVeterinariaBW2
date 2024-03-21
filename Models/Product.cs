@@ -35,10 +35,6 @@ namespace ClinicaVeterinaria.Models
 
         public virtual Supplier Supplier { get; set; }
 
-        public string NumeroRicetta { get; set; }
-
-        public decimal Prezzo { get; set; }
-
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sales { get; set; }
