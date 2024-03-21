@@ -23,7 +23,7 @@ namespace ClinicaVeterinaria.Models
 
         [Column(TypeName = "date")]
         public DateTime? DataFineRicovero  { get; set; }
-
+        [Range(0.01, double.MaxValue, ErrorMessage = "Il costo giornaliero del ricovero deve essere maggiore di zero.")]
         public decimal CostoGiornalieroRicovero { get; set; }
 
         public virtual Beast Beast { get; set; }

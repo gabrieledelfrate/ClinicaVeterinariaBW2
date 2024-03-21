@@ -59,7 +59,7 @@
 
                 <div class="form-group">
                     <label for="Nome" class="control-label">Randagio</label>
-                    @Html.CheckBoxFor(model => model.Smarrito)
+                    @Html.CheckBoxFor(model => model.Smarrito, new { @onclick = "ControlloCheckBox()" })
                 </div>
             </div>
         </div>
@@ -123,6 +123,33 @@
         }
     }
 
+    // Controllo checkbox "Randagio" codice MG
+
+    function ControlloCheckBox() {
+        var smarritoCheckbox = document.getElementById("Smarrito");
+        var proprietarioInpunt = document.getElementById("Proprietario");
+        var codiceFiscaleInput = document.getElementById("CodiceFiscale")
+        var emailProprietarioInpunt = document.getElementById("EmailProprietario");
+        var cellulareProprietarioInpunt = document.getElementById("CellulareProprietario");
+        var patologiePregresse = document.getElementById("PatologiePregresse");
+
+        if (smarritoCheckbox.checked) {
+            proprietarioInpunt.disabled = true;
+            codiceFiscaleInput.disabled = true;
+            emailProprietarioInpunt.disabled = true;
+            cellulareProprietarioInpunt.disabled = true;
+            patologiePregresse.disabled = true;
+        } else {
+            proprietarioInpunt.disabled = false;
+            codiceFiscaleInput.disabled = false;
+            emailProprietarioInpunt.disabled = false;
+            cellualreProprietarioInpunt.disabled = false;
+            patologiePregresse.disabled = false;
+        }
+    }
+
+           window.onload = ControlloCheckBox;
+    // fine controllo "Randagio"
     //Inizio codice metha
 
     // Funzione per consentire solo l'inserimento di numeri
@@ -137,6 +164,7 @@
         }
     };
     //fine codice metha
+
 </script>
 
 @*Fine Codice Pes*@
