@@ -26,12 +26,12 @@
                     {
                         @Html.ActionLink("ClinicaPerBestie", "Index", "Doctors", new { area = "" }, new { @class = "navbar-brand" })
                         <li>@Html.ActionLink("Bestie", "Index", "Doctors", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Ricoveri Attivi", "ActiveHospitalizations", "Doctors", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Ricoveri Attivi", "ActiveHospitalizations","Doctors", new { area = "" }, new { @class = "nav-link" })</li>
                     }
                     else if (folder == "pharmacists")
                     {
                         @Html.ActionLink("ClinicaPerBestie", "Index", "Pharmacists", new { area = "" }, new { @class = "navbar-brand" })
-                        <li>@Html.ActionLink("Medicine", "Index", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Prodotti", "Index", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
                     }
                     else
                     {

@@ -150,7 +150,16 @@
                                                 <dd class="col-sm-7">@hospitalization.DataInizioRicovero.ToShortDateString()</dd>
 
                                                 <dt class="col-sm-5">Data Finale</dt>
-                                                <dd class="col-sm-7">@hospitalization.DataFineRicovero.ToShortDateString()</dd>
+                                                <dd class="col-sm-7">
+                                                    @if (hospitalization.DataFineRicovero.HasValue)
+                                                    {
+                                                        @hospitalization.DataFineRicovero.Value.ToShortDateString()
+                                                    }
+                                                    else
+                                                    {
+                                                        @:Non disponibile
+                                                    }
+                                                </dd>
 
                                                 <dt class="col-sm-5">Prognosi</dt>
                                                 <dd class="col-sm-7">@hospitalization.Prognosi</dd>

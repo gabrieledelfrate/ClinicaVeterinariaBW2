@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Xml.Linq;
 
 namespace ClinicaVeterinaria.Controllers
 {
@@ -33,6 +34,13 @@ namespace ClinicaVeterinaria.Controllers
             ViewBag.SearchString = search;
             return View(beasts);
         }
+        [HttpGet]
+        public ActionResult AddBeast()
+        {
+            return View();
+        }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,10 +72,8 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         //Fine Codice Pes
-        [HttpGet]
-        public ActionResult AddHospitalization()
+        
 
-        private DBContext db = new DBContext();
         // GET: Doctors
         // CODICE MARCO SILVERI
 
@@ -155,7 +161,7 @@ namespace ClinicaVeterinaria.Controllers
                     db.Hospitalizations.Add(hospitalization);
                     db.SaveChanges();
                     ViewBag.Message = "Ricovero creato con succcesso!";
-                    return RedirectToAction("ActiveHospitalizations", "Doctors");
+                    return RedirectToAction("Details", new { id = hospitalization.BeastID });
                 }
             }
             catch (Exception ex)
@@ -171,6 +177,71 @@ namespace ClinicaVeterinaria.Controllers
             return RedirectToAction("ActiveHospitalizations", "Doctors");
         }
 
-        // FINE CODICE MARCO SILVERI
+        public ActionResult ActiveHospitalizations()
+        {
+            DateTime currentDate = DateTime.Now;
+
+            var allHospitalizations = db.Hospitalizations.ToList();
+            return View(allHospitalizations);
+        }
+        public ActionResult GetHospitalizationDetails(int id)
+        {
+            var hospitalization = db.Hospitalizations.Find(id);
+            if (hospitalization != null)
+            {
+                var details = new
+                {
+                    animalName = hospitalization.Beast.Nome,
+                    doctorName = hospitalization.Doctor.Nome + " " + hospitalization.Doctor.Cognome,
+                    prognosis = hospitalization.Prognosi,
+                    dailyCost = hospitalization.CostoGiornalieroRicovero
+                };
+                return Json(details, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CheckoutHospitalization(int id)
+        {
+            var hospitalization = db.Hospitalizations.Find(id);
+            if (hospitalization != null)
+            {
+                hospitalization.DataFineRicovero = DateTime.Now.Date;
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ContabilizzazioneRicoveriAsincrona()
+        {
+            try
+            {
+                var activeHospitalizations = await db.Hospitalizations
+                    .Where(h => h.DataFineRicovero == null && h.Beast.Microchip)
+                    .Select(h => new
+                    {
+                        AnimalName = h.Beast.Nome,
+                        StartDate = h.DataInizioRicovero
+                    })
+                    .ToListAsync();
+
+                return Json(activeHospitalizations, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
+        }
+
+        // Fine codice MG
     }
 }

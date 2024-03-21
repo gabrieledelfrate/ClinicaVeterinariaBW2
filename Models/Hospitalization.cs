@@ -22,7 +22,7 @@ namespace ClinicaVeterinaria.Models
         public int DoctorID { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime DataFineRicovero { get; set; }
+        public DateTime? DataFineRicovero  { get; set; }
 
         public decimal CostoGiornalieroRicovero { get; set; }
 

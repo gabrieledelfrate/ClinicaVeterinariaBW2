@@ -45,3 +45,9 @@ textarea {
     transform: translateX(0); 
 }
 
+/* Bordo dei form - Metha - */
+
+.form-control:focus, .form-select:focus, .form-select:valid:focus, .form-select:default:focus {
+    box-shadow: 0 0 10px #198754;
+}
+
