@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System;
+using System.Net;
 
 namespace ClinicaVeterinaria.Controllers
 {
@@ -139,7 +140,7 @@ namespace ClinicaVeterinaria.Controllers
                     NumeroRicetta = numeroRicetta,
                     NomeFarmacista = nomeFarmacista,
                     DataVendita = dataVendita
-            };
+                };
 
                 Session["ReportProducts"] = null;
 
@@ -179,9 +180,9 @@ namespace ClinicaVeterinaria.Controllers
         {
             ViewBag.SupplierID = new SelectList(db.Suppliers, "SupplierID", "NomeAzienda");
             ViewBag.DrawerID = new SelectList(db.Drawers, "DrawerID", "DrawerID");
-   return View();
+            return View();
         }
-        
+
         public ActionResult MedicinaXCliente()
         {
             var proprietari = db.Beasts.Select(b => new
@@ -213,8 +214,7 @@ namespace ClinicaVeterinaria.Controllers
 
             return PartialView("_ProdottiByCodiceFiscale", prodotti);
         }
-        public ActionResult Ricetta()
-        {
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -233,10 +233,15 @@ namespace ClinicaVeterinaria.Controllers
             return View(product);
         }
 
+        public ActionResult Ricetta()
+        {
+            return View();
+        }
 
+        [HttpPost]
         public ActionResult Ricetta(string MicrochipCodice)
         {
-            
+
             var beast = db.Beasts.FirstOrDefault(b => b.MicrochipCodice == MicrochipCodice);
 
             if (beast == null)
@@ -245,16 +250,16 @@ namespace ClinicaVeterinaria.Controllers
                 return View();
             }
 
-          
+
             ViewBag.BeastID = beast.BeastID;
 
-            
+
             var esami = db.Examinations
                           .Where(e => e.BeastID == beast.BeastID)
                           .OrderBy(e => e.DataVisita)
                           .ToList();
 
-            return View(esami); 
+            return View(esami);
         }
         public ActionResult MedicinaXData()
         {
@@ -275,6 +280,22 @@ namespace ClinicaVeterinaria.Controllers
                              .ToList();
 
             return PartialView("_MedicineByDate", products);
+        }
+
+        public ActionResult FarmacistaDet(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var farmacista = db.Pharmacists.FirstOrDefault(d => d.PharmacistID == id);
+            if (farmacista == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(farmacista);
         }
 
     }

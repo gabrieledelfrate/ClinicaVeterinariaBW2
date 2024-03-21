@@ -31,8 +31,10 @@
                     }
                     else if (folder == "pharmacists")
                     {
-                        @Html.ActionLink("ClinicaPerBestie", "Index", "Pharmacists", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("FarmaciaXBestie", "Index", "Pharmacists", new { area = "" }, new { @class = "navbar-brand" })
                         <li>@Html.ActionLink("Prodotti", "Index", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Medicina per Data", "MedicinaXData", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Medicina per Cliente", "MedicinaXCliente", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
                     }
                     else
                     {
@@ -47,7 +49,7 @@
             }
             else if (Session["UserF"] != null)
             {
-                <a class="me-5 text-white" href="/Doctors/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a> //TODO
+                <a class="me-5 text-white" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a> //TODO
             }
             @if (Request.Cookies[".ASPXAUTH"] != null)
             {

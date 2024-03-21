@@ -309,7 +309,7 @@
     <Content Include="Views\Pharmacists\AddNewProduct.cshtml" />
     <Content Include="Views\Home\LoginDoctor.cshtml" />
     <Content Include="Views\Doctors\DottoreDet.cshtml" />
-    <Content Include="Views\Doctors\FarmacistaDet.cshtml" />
+    <Content Include="Views\Pharmacists\FarmacistaDet.cshtml" />
     <Content Include="Views\Pharmacists\MedicinaXCliente.cshtml" />
     <Content Include="Views\Pharmacists\_ProdottiByCodiceFiscale.cshtml" />
     <Content Include="Views\Pharmacists\Ricetta.cshtml" />

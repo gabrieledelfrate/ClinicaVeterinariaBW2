@@ -165,22 +165,6 @@ namespace ClinicaVeterinaria.Controllers
             return View(dottore);
         }
 
-        public ActionResult FarmacistaDet(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var farmacista = db.Pharmacists.FirstOrDefault(d => d.PharmacistID == id);
-            if (farmacista == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(farmacista);
-        }
-
         [HttpPost]
         public ActionResult AddHospitalization(Hospitalization hospitalization)
         {
