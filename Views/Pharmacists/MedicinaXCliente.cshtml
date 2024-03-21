@@ -1,0 +1,41 @@
+﻿<h4>Vendite per cliente</h4>
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="codiceFiscaleInput" placeholder="Inserisci Codice Fiscale" aria-label="Codice Fiscale" aria-describedby="button-addon">
+                <button class="btn btn-outline-secondary" type="button" id="btnMostraProdotti">Cerca Vendite</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="prodottiContainer"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnMostraProdotti').click(function () {
+            var codiceFiscale = $('#codiceFiscaleInput').val();
+            if (codiceFiscale) {
+                $.ajax({
+                    url: '@Url.Action("GetProdottiByCodiceFiscale", "Pharmacists")',
+                    type: 'GET',
+                    data: { codiceFiscale: codiceFiscale },
+                    success: function (data) {
+                        $('#prodottiContainer').html(data);
+                    },
+                    error: function() {
+                        $('#prodottiContainer').html('<div class="alert alert-danger" role="alert">Nessuna vendita registrata per il codice fiscale inserito.</div>');
+                    }
+                });
+            } else {
+                $('#prodottiContainer').empty();
+            }
+        });
+    });
+    </script>
+}

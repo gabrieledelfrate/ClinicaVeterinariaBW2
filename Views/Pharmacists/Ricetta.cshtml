@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Examination>
+
+@{
+    ViewBag.Title = "Ricerca Ricetta";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@using (Html.BeginForm("Ricetta", "Pharmacists", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="MicrochipCodice">Codice Microchip:</label>
+        <input type="text" class="form-control" id="MicrochipCodice" name="MicrochipCodice" placeholder="Inserire codice microchip">
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Cerca</button>
+}
+
+@if (Model != null && Model.Any())
+{
+    <h3>Patologie e Ricette:</h3>
+    foreach (var item in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Data Visita: @item.DataVisita.ToShortDateString()
+            </div>
+            <div class="card-body">
+                <p>Patologie Riscontrate: @item.PatologieRiscontrate</p>
+                <p>Ricetta: @item.Ricetta</p>
+            </div>
+        </div>
+    }
+}

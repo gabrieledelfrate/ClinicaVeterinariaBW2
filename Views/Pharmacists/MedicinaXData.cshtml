@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Medicina per Data";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="form-group">
+    <label for="dataVendita">Data Vendita:</label>
+    <input type="date" class="form-control" id="dataVendita" name="dataVendita">
+</div>
+<button id="btnCercaMedicine" class="btn btn-primary mt-3">Cerca Medicine</button>
+
+<div id="medicineContainer"></div>
+
+@section Scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnCercaMedicine').click(function () {
+            var dataVendita = $('#dataVendita').val();
+            if (dataVendita) {
+                $.ajax({
+                    url: '@Url.Action("GetMedicineByDate", "Pharmacists")',
+                    type: 'POST',
+                    data: { dataVendita: dataVendita },
+                    success: function (data) {
+                        $('#medicineContainer').html(data);
+                    },
+                    error: function() {
+                        $('#medicineContainer').html('<span style="color: red;">Nessuna medicina trovata per questa data.</span>');
+                    }
+                });
+            } else {
+                $('#medicineContainer').empty();
+            }
+        });
+    });
+    </script>
+}
