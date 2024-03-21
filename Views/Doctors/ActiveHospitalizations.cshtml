@@ -1,20 +1,13 @@
 ﻿@model List<ClinicaVeterinaria.Models.Hospitalization>
 
 <div class="search-and-button d-flex justify-content-between">
-    <label for="searchInput" class="align-self-center">
-        <div class="input-group">
-            <input type="text" id="searchInput" class="form-control" placeholder="Ricerca Bestia">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">Cerca</button>
-            </div>
-        </div>
-    </label>
     <button class="btn btn-primary align-self-center" onclick="window.location.href='@Url.Action("AddHospitalization", "Doctors")'">Aggiungi Ricovero</button>
-
+    <button class="btn btn-primary" onclick="openContabilizzazioneModal()">Contabilizzazione</button>
 </div>
+
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
+    <div class="d-flex flex-column">
+        <div class="my-4">
             <h2>Ricoveri Attivi</h2>
             <table class="table table-striped">
                 <thead>
@@ -36,13 +29,14 @@
                             <td>@hospitalization.Prognosi</td>
                             <td>
                                 <button class="btn btn-primary" onclick="openModal('@hospitalization.HospitalizationID')">Dettaglio Ricovero</button>
+                                <button class="btn btn-primary">Dettaglio Bestia</button>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-        <div class="col-md-6">
+        <div>
             <h2>Checkout Ricoveri</h2>
             <table class="table table-striped">
                 <thead>
@@ -70,7 +64,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Checkout -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -93,7 +87,83 @@
         </div>
     </div>
 </div>
+<!--Fine modal checkout -->
+<!--Modal Contabilizzazione-->
 
+<div class="modal fade" id="contabilizzazioneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Dettagli Ricoveri Attivi</h5>
+                <button type="button" class="btn-close bg-danger" data-dismiss="modal" aria-label="Close" onclick="closeContabilizzazioneModal()">
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome Animale</th>
+                            <th>Inizio Ricovero</th>
+                            <th>Fine Ricovero</th>
+                            <th>Giorni di Ricovero</th>
+                            <th>Costo Giornaliero</th>
+                            <th>Totale Rimborso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var hospitalization in Model)
+                        {
+                            if (!hospitalization.Beast.Microchip)
+                            {
+                                <tr>
+                                    <td>@hospitalization.Beast.Nome</td>
+                                    <td>@hospitalization.DataInizioRicovero.ToString("yyyy-MM-dd")</td>
+                                    <td>@(hospitalization.DataFineRicovero.HasValue ? hospitalization.DataFineRicovero.Value.ToString("yyyy-MM-dd") : "N/A")</td>
+                                    <td>
+                                        @if (hospitalization.DataFineRicovero.HasValue)
+                                        {
+                                            var giorniTotali = (int)(hospitalization.DataFineRicovero.Value.Date - hospitalization.DataInizioRicovero.Date).TotalDays;
+                                            @giorniTotali
+                                        }
+                                        else
+                                        {
+                                            @:N/A
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (hospitalization.DataFineRicovero.HasValue)
+                                        {
+                                            @Html.DisplayFor(modelItem => hospitalization.CostoGiornalieroRicovero)
+                                        }
+                                        else
+                                        {
+                                            @:N/A
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (hospitalization.DataFineRicovero.HasValue)
+                                        {
+                                            var giorniTotali = (int)(hospitalization.DataFineRicovero.Value.Date - hospitalization.DataInizioRicovero.Date).TotalDays;
+                                            @(hospitalization.CostoGiornalieroRicovero * giorniTotali)
+                                        }
+                                        else
+                                        {
+                                            @:N/A
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeContabilizzazioneModal()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Fine Modal Contabilizzazione-->
 <script>
     var currentHospitalizationID;
 
@@ -137,5 +207,15 @@
                 alert('Si è verificato un errore durante l\'esecuzione del check-out.');
             }
         });
+    }
+
+    function openContabilizzazioneModal() {
+        var modal = $('#contabilizzazioneModal');
+        modal.modal('show');
+    }
+
+    function closeContabilizzazioneModal() {
+        var modal = $('#contabilizzazioneModal');
+        modal.modal('hide');
     }
 </script>

@@ -1,15 +1,15 @@
 ﻿using ClinicaVeterinaria.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace ClinicaVeterinaria.Controllers
 {
-
-
- 
  // inizio codice MG
     public class DoctorsController : Controller
     {
@@ -34,7 +34,7 @@ namespace ClinicaVeterinaria.Controllers
                     db.Hospitalizations.Add(hospitalization);
                     db.SaveChanges();
                     ViewBag.Message = "Ricovero creato con succcesso!";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ActiveHospitalizations", "Doctors");
                 }
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace ClinicaVeterinaria.Controllers
             db.Hospitalizations.Add(hospitalization);
             db.SaveChanges();
             ViewBag.Message = "Ricovero creato con succeso!";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ActiveHospitalizations", "Doctors");
         }
         
         public ActionResult ActiveHospitalizations()
@@ -82,7 +82,7 @@ namespace ClinicaVeterinaria.Controllers
             var hospitalization = db.Hospitalizations.Find(id);
             if (hospitalization != null)
             {
-                hospitalization.DataFineRicovero = DateTime.Now.Date; 
+                hospitalization.DataFineRicovero = DateTime.Now.Date;
                 db.SaveChanges();
                 return Json(new { success = true });
             }
@@ -91,7 +91,28 @@ namespace ClinicaVeterinaria.Controllers
                 return HttpNotFound();
             }
         }
-        // Fine codice MG
+            [HttpPost]
+        public async Task<ActionResult> ContabilizzazioneRicoveriAsincrona()
+        {
+            try
+            {
+                var activeHospitalizations = await db.Hospitalizations
+                    .Where(h => h.DataFineRicovero == null && h.Beast.Microchip)
+                    .Select(h => new
+                    {
+                        AnimalName = h.Beast.Nome,
+                        StartDate = h.DataInizioRicovero
+                    })
+                    .ToListAsync();
 
+                return Json(activeHospitalizations, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
+        }
+
+        // Fine codice MG
     }
 }
