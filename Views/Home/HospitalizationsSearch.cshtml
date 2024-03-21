@@ -1,7 +1,40 @@
-﻿
+﻿@model List<ClinicaVeterinaria.Models.Hospitalization>
+
 @{
-    ViewBag.Title = "RicercaRicoveri";
+    ViewBag.Title = "Ricerca Ricovero";
 }
 
-<h2>RicercaRicoveri</h2>
+<h2>Ricerca Ricovero</h2>
 
+<form id="searchForm" class="form-inline">
+    <div class="form-group mr-2">
+        <label for="MicrochipCodice" class="mr-2">Inserisci il numero microchip:</label>
+        <input type="text" id="MicrochipCodice" name="MicrochipCodice" class="form-control mr-2" />
+    </div>
+    <button type="button" id="searchButton" class="btn btn-primary">Cerca</button>
+</form>
+
+
+<div id="searchResults"></div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+    $("#searchButton").click(function () {
+        var MicrochipCodice = $("#MicrochipCodice").val();
+        console.log("MicrochipCodice: " + MicrochipCodice);
+        $.ajax({
+            url: '@Url.Action("SearchByMicrochip", "Home")',
+            type: 'GET',
+            data: { MicrochipCodice: MicrochipCodice },
+            success: function (data) {
+                $("#searchResults").html(data);
+            },
+            error: function () {
+                alert('Si è verificato un errore durante la ricerca.');
+            }
+        });
+    });
+});
+    </script>
+}

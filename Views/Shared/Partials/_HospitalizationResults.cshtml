@@ -1,0 +1,29 @@
+﻿@model List<ClinicaVeterinaria.Models.Hospitalization>
+
+@if (Model != null && Model.Count > 0)
+{
+    <h3>Risultati della ricerca:</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data Inizio Ricovero</th>
+                <th>Prognosi</th>
+                <th>Costo Giornaliero Ricovero</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.DataInizioRicovero.ToShortDateString()</td>
+                    <td>@item.Prognosi</td>
+                    <td>@item.CostoGiornalieroRicovero.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nessun risultato trovato.</p>
+}

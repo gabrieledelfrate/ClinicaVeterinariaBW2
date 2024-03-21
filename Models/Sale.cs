@@ -15,14 +15,14 @@ namespace ClinicaVeterinaria.Models
         [Required]
         [StringLength(16)]
         public string CodiceFiscale { get; set; }
-
-        public int ExaminationID { get; set; }
+        [StringLength(8)]
+        public string NumeroRicetta { get; set; }
 
         public decimal Prezzo { get; set; }
 
         public int PharmacistID { get; set; }
 
-        public virtual Examination Examination { get; set; }
+        public string NumeroRicetta { get; set; }
 
         public virtual Pharmacist Pharmacist { get; set; }
 
