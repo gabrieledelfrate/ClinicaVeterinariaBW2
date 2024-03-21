@@ -1,7 +1,6 @@
 ﻿@model List<ClinicaVeterinaria.Models.Hospitalization>
 
-<div class="search-and-button d-flex justify-content-between">
-    <button class="btn btn-primary align-self-center" onclick="window.location.href='@Url.Action("AddHospitalization", "Doctors")'">Aggiungi Ricovero</button>
+<div class="search-and-button d-flex justify-content-end">
     <button class="btn btn-primary" onclick="openContabilizzazioneModal()">Contabilizzazione</button>
 </div>
 
@@ -29,7 +28,7 @@
                             <td>@hospitalization.Prognosi</td>
                             <td>
                                 <button class="btn btn-primary" onclick="openModal('@hospitalization.HospitalizationID')">Dettaglio Ricovero</button>
-                                <button class="btn btn-primary">Dettaglio Bestia</button>
+                                <button class="btn btn-primary align-self-center" onclick="window.location.href='@Url.Action("Details", "Doctors", new { id = hospitalization.BeastID } )'">Dettaglio Bestia</button> @*TODO*@
                             </td>
                         </tr>
                     }

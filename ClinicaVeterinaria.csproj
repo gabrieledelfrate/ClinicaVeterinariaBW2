@@ -100,7 +100,6 @@
       <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Security" />
-
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -302,8 +301,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Pharmacists\Orders.cshtml" />
     <Content Include="Views\Pharmacists\CheckoutSummary.cshtml" />
-	  <Content Include="Views\Doctors\AddExamination.cshtml" />
-	  <Content Include="Views\Doctors\Details.cshtml" />
+    <Content Include="Views\Doctors\AddExamination.cshtml" />
+    <Content Include="Views\Doctors\Details.cshtml" />
+    <Content Include="Views\Doctors\ActiveHospitalizations.cshtml" />
+    <Content Include="Views\Doctors\AddBeast.cshtml" />
+    <Content Include="Views\Doctors\AddHospitalization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
