@@ -162,8 +162,10 @@ namespace ClinicaVeterinaria.Controllers
             summaryViewModel.Animale = db.Beasts.FirstOrDefault(b => b.CodiceFiscale == codiceFiscale);
 
             summaryViewModel.Vendite = db.Sales
-                                        .Where(s => s.CodiceFiscale == codiceFiscale)
-                                        .ToList();
+                            .Where(s => s.CodiceFiscale == codiceFiscale)
+                            .OrderByDescending(s => s.DataVendita) 
+                            .ToList();
+
 
             summaryViewModel.PrezzoTotale = summaryViewModel.Vendite.Sum(v => v.Prezzo);
             summaryViewModel.DataVendita = dataVendita;

@@ -55,6 +55,7 @@ namespace ClinicaVeterinaria.Models
         public string EmailProprietario { get; set; }
 
         [StringLength(20)]
+        [RegularExpression(@"^\d{1,20}$", ErrorMessage = "Il campo CellulareProprietario deve contenere solo numeri.")]
         public string CellulareProprietario { get; set; }
 
         [StringLength(500)]
