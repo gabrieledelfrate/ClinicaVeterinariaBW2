@@ -4,45 +4,52 @@
     ViewBag.Title = "Index";
 }
 
-<div class="container">
-    @*Codice Inzio Pes*@
-    <h2>Lista Bestie</h2>
-    <div class="d-flex justify-content-between mb-3" style="width: 60%;margin: auto;">
-        <form method="get" action="@Url.Action("Index", "Doctors")" class="d-flex align-items-center" style="width:18rem">
-            <div class="input-group">
-                <input type="text" class="form-control" name="search" placeholder="Cerca per nome o microchip" value="@ViewBag.SearchString" />
-                <button type="submit" class="btn btn-primary">Cerca</button>
+<div class="container" style="width:35rem">
+    <h2 class="text-success border-bottom border-success pb-3">Lista Bestie</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <form method="get" action="@Url.Action("Index", "Doctors")" style="width: 60%;">
+            <div class="input-group mt-2">
+                <input type="text" class="form-control border-success" name="search" placeholder="Cerca per nome o microchip" value="@ViewBag.SearchString" />
+                <button type="submit" class="btn btn-success">Cerca</button>
             </div>
         </form>
-        <a href="@Url.Action("AddBeast", "Doctors")" class="btn btn-success">Aggiungi</a>
+        <a href="@Url.Action("AddBeast", "Doctors")" class="btn btn-success mt-2">Aggiungi</a>
     </div>
-      <div class="row mb-2" style="width: 60%; margin: auto;">
-        <div class="col-md-3">Foto bestia</div>
-        <div class="col-md-6 ps-0">Nome bestia</div>
-    </div>
-    @*Codice Fine Pes*@
-    <table class="table table-striped">
-        <tbody>
-            @foreach (var beast in Model)
-            {
-                <tr>
-                    <td>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="@beast.Foto" alt="Foto" style="max-width: 100px; max-height: 100px;" />
-                            </div>
-                            <div class="col-md-6 ps-3">
-                                <div class="d-flex align-items-center">
-                                    <span>@beast.Nome</span>
+
+        @foreach (var beast in Model)
+        {
+            <div class="card mb-3 p-0 border-success">
+                <div class="d-flex">
+                    <div style="background-image: url('@beast.Foto'); background-size: cover; background-position: center; width: 25%; border-top-left-radius:0.3rem" class=" border border-success"></div>
+                    <div class="d-flex card-body justify-content-between">
+                        <div class="d-flex ">
+                            <div>
+                                <div>
+                                    <p class="card-title fw-bold m-0">Nome bestia:</p>
+                                    <p>@beast.Nome</p>
+                                </div>
+                                <div>
+                                    <p class="card-text fw-bold m-0">Codice microchip:</p>
+                                    <p>@beast.MicrochipCodice</p>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                    <td class="text-end">
-                        <a href="@Url.Action("Details", "Doctors", new { id = beast.BeastID })" class="btn btn-info">Dettagli</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                        <div class="d-flex">
+                            <div>
+                                <div>
+                                    <p class="card-title fw-bold m-0">Nome Proprietario:</p>
+                                    <p>@beast.Proprietario</p>
+                                </div>
+                                <div>
+                                    <p class="card-text fw-bold m-0">Codice Fiscale:</p>
+                                    <p>@beast.CodiceFiscale</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="@Url.Action("Details", "Doctors", new { id = beast.BeastID })" class="btn btn-success BottoneCard">Cartella clinica</a>
+            </div>
+        }
+ 
 </div>
