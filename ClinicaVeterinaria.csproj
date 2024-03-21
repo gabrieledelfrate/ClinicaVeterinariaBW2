@@ -301,6 +301,7 @@
     <Content Include="Views\Pharmacists\Index.cshtml" />
     <Content Include="Views\Pharmacists\ProductsSearchXDate.cshtml" />
     <Content Include="Views\Pharmacists\ProductsSearchXCodFisc.cshtml" />
+    <Content Include="Views\Shared\Partials\_HospitalizationResults.cshtml" />
     <Content Include="Views\Pharmacists\Details.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />

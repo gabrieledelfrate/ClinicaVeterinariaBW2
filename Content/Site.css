@@ -11,3 +11,37 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#card1 {
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateX(-100%); 
+}
+
+#card2 {
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(-100%); 
+}
+
+#card3 {
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateX(100%);
+}
+
+#card1.show-left {
+    opacity: 1;
+    transform: translateX(0); 
+}
+
+#card2.show-top {
+    opacity: 1;
+    transform: translateY(0); 
+}
+
+#card3.show-right {
+    opacity: 1;
+    transform: translateX(0); 
+}
+

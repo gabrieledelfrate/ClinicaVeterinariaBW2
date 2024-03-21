@@ -1,26 +1,57 @@
 ﻿<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="aspnetTitle">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-            is an ideal platform for building RESTful applications on the .NET Framework.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-        </section>>
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-md-4 card-container" id="card1">
+                <a href="@Url.Action("Login", "Home")" class="card-link text-center text-decoration-none">
+                    <div class="card h-100">
+                        <img src="https://www.veterinari.vda.it/wp-content/uploads/2020/01/android-chrome-512x512-1.png" class="card-img-top img-fluid" alt="Immagine 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Login Veterinari</h5>
+                            <p class="card-text">
+                                Sei un Medico?
+                                Clicca qui per effettuare il login
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 card-container" id="card2">
+                <a href="@Url.Action("HospitalizationsSearch", "Home")" class="card-link text-center text-decoration-none">
+                    <div class="card h-100">
+                        <img src="https://previews.123rf.com/images/dstarky/dstarky1702/dstarky170200254/71408528-cerca-icona-o-logo-in-stile-moderno-pittogramma-di-profilo-nero-di-alta-qualit%C3%A0-per-il-design-del.jpg" class="card-img-top img-fluid" alt="Immagine 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Ricerca ricoveri</h5>
+                            <p class="card-text">
+                                Cerchi il tuo animale?
+                                Clicca qui per effettuare il login
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 card-container" id="card3">
+                <a href="@Url.Action("LoginPharmacist", "Home")" class="card-link text-center text-decoration-none">
+                    <div class="card h-100">
+                        <img src="https://itimbripersonalizzati.it/wp-content/uploads/2015/01/Timbri-per-farmacisti.jpg" class="card-img-top img-fluid" alt="Immagine 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Login Farmacisti</h5>
+                            <p class="card-text">
+                                Sei un farmacista?
+                                Clicca qui per effettuare il login
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </main>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#card1').addClass('show-left');
+            $('#card2').delay(200).addClass('show-top');
+            $('#card3').delay(400).addClass('show-right');
+        });
+    </script>
+}
