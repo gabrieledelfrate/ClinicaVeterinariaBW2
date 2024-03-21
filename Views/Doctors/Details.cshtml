@@ -5,9 +5,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <!-- Colonna sinistra - Informazioni Animale -->
-        <div class="col-lg-4 mb-5">
-            <div class="card shadow-lg">
-                <img src="@Model.Foto" alt="Immagine dell'animale" class="card-img-top rounded-circle mx-auto d-block img-thumbnail shadow" style=" object-fit: none; width: 22vw; height: 44vh; margin-top: -5rem;">
+        <div class="col-lg-4 mb-5 ">
+            <div class="card shadow-lg border-success">
+                <img src="@Model.Foto" alt="Immagine dell'animale" class="bg-white card-img-top rounded-circle mx-auto border border-success d-block shadow" style=" object-fit: none; width: 22vw; height: 44vh; margin-top: -5rem;">
                 <div class="card-body">
                     <h3 class="card-title text-center mb-4">@Model.Nome</h3>
                     <dl class="row">
@@ -89,9 +89,6 @@
                                                 <dd class="col-sm-7">@exam.Prezzo</dd>
                                             </dl>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -170,9 +167,6 @@
                                                 <dt class="col-sm-5">Prezzo Giornaliero</dt>
                                                 <dd class="col-sm-7">@hospitalization.CostoGiornalieroRicovero</dd>
                                             </dl>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
                                         </div>
                                     </div>
                                 </div>
