@@ -30,6 +30,16 @@ namespace ClinicaVeterinaria.Controllers
             return View();
         }
 
+        public ActionResult LoginDoctor()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
         public ActionResult Login()
         {
             return View();
@@ -83,7 +93,12 @@ namespace ClinicaVeterinaria.Controllers
                 if (pharmacist != null)
                 {
                     FormsAuthentication.SetAuthCookie(email, false);
+
+                    Session["PharmacistID"] = pharmacist.PharmacistID;
+                    Session["UserEmail"] = email;
+                    Session["UserF"] = pharmacist.Nome;
                     return RedirectToAction("Index", "Pharmacists");
+
                 }
                 else
                 {
@@ -93,12 +108,50 @@ namespace ClinicaVeterinaria.Controllers
             }
         }
 
-        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LoginDoctor(string email, string passwordDoctor)
+        {
+            using (var db = new DBContext())
+            {
+                var medico = db.Doctors.FirstOrDefault(m => m.Email == email && m.PasswordMedico == passwordDoctor);
+
+                if (medico != null)
+                {
+                    FormsAuthentication.SetAuthCookie(email, false);
+
+                    Session["DoctorID"] = medico.DoctorID;
+                    Session["UserEmail"] = email;
+                    Session["UserM"] = medico.Nome;
+                    return RedirectToAction("Index", "Doctors");
+                }
+                else
+                {
+                    ViewBag.Error = "Credenziali non valide";
+                    return View();
+                }
+            }
+
+        }
+
+
         public ActionResult LogoutFarmacia()
         {
             FormsAuthentication.SignOut();
+
+            if (Session["UserF"] != null)
+            {
+                Session.Remove("UserF");
+            }
+
+            if (Session["UserM"] != null)
+            {
+                Session.Remove("UserM");
+            }
+
             return RedirectToAction("Index");
         }
+
         //Lorenzo-Daniel
     }
 }
