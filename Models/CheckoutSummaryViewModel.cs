@@ -12,6 +12,7 @@ namespace ClinicaVeterinaria.Models
         public decimal PrezzoTotale { get; set; }
         public string NumeroRicetta { get; set; }
         public DateTime DataVendita { get; set; }
+        public int Quantita { get; set; }
         public int PharmacistID { get; set; }
         public string NomeFarmacista { get; set; }
     }

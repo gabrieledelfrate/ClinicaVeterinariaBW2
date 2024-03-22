@@ -122,7 +122,7 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita)
+        public ActionResult Checkout(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita, Dictionary<int, int> productQuantities)
         {
             var redirect = RedirectToLoginIfNotAuthenticated();
             if (redirect != null) return redirect;
@@ -140,10 +140,13 @@ namespace ClinicaVeterinaria.Controllers
             }
 
             List<int> reportProductIDs = Session["ReportProducts"] as List<int>;
-            if (reportProductIDs != null && reportProductIDs.Count > 0)
+            if (productQuantities != null && productQuantities.Count > 0)
             {
-                foreach (int productId in reportProductIDs)
+                foreach (var item in productQuantities)
                 {
+                    var productId = item.Key;
+                    var quantity = item.Value;
+
                     var product = db.Products.Find(productId);
                     if (product != null)
                     {
@@ -154,7 +157,8 @@ namespace ClinicaVeterinaria.Controllers
                             NumeroRicetta = numeroRicetta,
                             DataVendita = dataVendita,
                             Prezzo = product.Prezzo,
-                            PharmacistID = pharmacistId
+                            PharmacistID = pharmacistId,
+                            Quantita = quantity
                         };
                         db.Sales.Add(sale);
                     }
