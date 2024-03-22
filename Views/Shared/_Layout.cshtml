@@ -71,7 +71,7 @@
                 }
                 else if (Session["UserF"] != null)
                 {
-                    <a class="me-5 text-white" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a>//TODO
+                    <a class="me-5 welcome-btn" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a>//TODO
                 }
                 @if (Request.Cookies[".ASPXAUTH"] != null)
                 {
