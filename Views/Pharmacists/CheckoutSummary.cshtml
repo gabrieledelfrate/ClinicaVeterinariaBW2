@@ -31,3 +31,12 @@
     </tbody>
 </table>
 
+<div class="d-flex justify-content-end">
+    <button id="printButton" class="btn btn-primary d-print-none">Stampa PDF</button>
+</div>
+
+<script>
+    document.getElementById('printButton').addEventListener('click', function () {
+        window.print();
+    });
+</script>
