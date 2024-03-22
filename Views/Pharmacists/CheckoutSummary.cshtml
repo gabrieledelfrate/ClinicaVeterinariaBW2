@@ -1,17 +1,18 @@
 ﻿@model ClinicaVeterinaria.Models.CheckoutSummaryViewModel
 
-<h2>Riepilogo prodotti comprati</h2>
+<h2 class="pb-3" style="color:darkcyan; border-bottom:1px solid">Riepilogo prodotti comprati</h2>
+<h3 class="mb-2" style="color:darkcyan;">Informazioni sull'animale e Proprietario</h3>
+<p class="fs-5">Nome Animale: @Model.Animale.Nome</p>
+<p class="fs-5">Nome Proprietario: @Model.Animale.Proprietario</p>
+<p class="fs-5">Codice Fiscale: @Model.Animale.CodiceFiscale</p>
+<p class="fs-5">Numero Ricetta: @Model.NumeroRicetta</p>
+<p class="fs-5">Nome Farmacista: @Model.NomeFarmacista</p>
 
-<h3>Informazioni sull'animale e Proprietario</h3>
-<p>Nome Animale: @Model.Animale.Nome</p>
-<p>Nome Proprietario: @Model.Animale.Proprietario</p>
-<p>Codice Fiscale: @Model.Animale.CodiceFiscale</p>
-<p>Numero Ricetta: @Model.NumeroRicetta</p>
-<p>Nome Farmacista: @Model.NomeFarmacista</p>
-
-<h3>Prodotti Acquistati</h3>
-<h5 colspan="4">Totale speso:</h5>
-<h5>@String.Format("{0:C}", Model.PrezzoTotale)</h5>
+<h3 class="pb-3" style="color:darkcyan; border-bottom:1px solid">Prodotti Venduti</h3>
+<div class="d-flex justify-content-between mt-4">
+    <h4>Totale Guadagnato: @String.Format("{0:C}", Model.PrezzoTotale)</h4>
+    <button id="printButton" class="btn text-white d-print-none" style="background-color:darkcyan">Stampa PDF</button>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -31,11 +32,6 @@
         }
     </tbody>
 </table>
-
-
-<div class="d-flex justify-content-end">
-    <button id="printButton" class="btn btn-primary d-print-none">Stampa PDF</button>
-</div>
 
 <script>
     document.getElementById('printButton').addEventListener('click', function () {
