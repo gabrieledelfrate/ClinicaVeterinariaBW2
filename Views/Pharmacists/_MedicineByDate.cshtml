@@ -2,14 +2,14 @@
 
 @if (!Model.Any())
 {
-    <div>Nessuna medicina trovata per questa data.</div>
+    <div class="mt-2">Nessuna medicina trovata per questa data.</div>
 }
 else
 {
     <ul>
         @foreach (var item in Model)
         {
-            <li>@item.Nome</li>
+            <li class="fs-5 mt-3">@item.Nome</li>
         }
     </ul>
 }
