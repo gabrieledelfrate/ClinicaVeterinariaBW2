@@ -58,7 +58,7 @@ else
                     <td>@Html.DisplayFor(modelItem => item.Prezzo)€</td>
                     <td class="d-flex justify-content-center">
                         @Html.ActionLink("Aggiungi All'ordine", "AddToReport", new { id = item.ProductID }, new { @class = "btn me-2 text-white", style = "background-color:darkcyan" })
-                        @Html.ActionLink("Dettagli", "Details", new { id = item.ProductID }, new { @class = "btn ms-2 text-white", style = "background-color:darkcyan" })
+                        @Html.ActionLink("Dettagli", "Details", new { id = item.ProductID }, new { @class = "btn ms-2 text-white", style = "background-color:#016565" })
                     </td>
                 </tr>
             }
