@@ -2,7 +2,7 @@
     ViewBag.Title = "Login Dottori";
 }
 
-<h2>Login Veterinari</h2>
+<h2 class="text-success border-bottom border-success pb-3">Login Veterinari</h2>
 
 @using (Html.BeginForm("LoginDoctor", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -10,18 +10,18 @@
     <div class="form-group">
         <label for="email" class="col-sm-2 control-label">Email:</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" name="email" required>
+            <input type="text" class="form-control border-success" name="email" required>
         </div>
     </div>
     <div class="form-group">
         <label for="passwordDoctor" class="col-sm-2 control-label">Password:</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control" name="passwordDoctor" required>
+            <input type="password" class="form-control border-success" name="passwordDoctor" required>
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-info mt-3">Login</button>
+            <button type="submit" class="btn btn-success mt-3">Login</button>
         </div>
     </div>
     if (ViewBag.Error != null)
