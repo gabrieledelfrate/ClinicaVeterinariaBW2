@@ -15,7 +15,8 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult Index(string search)
         {
-
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
 
             IQueryable<Product> products = db.Products;
 
@@ -30,6 +31,8 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult Details(int id)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             var product = db.Products
                             .Include(p => p.Drawer)
                             .Include(p => p.Drawer.Locker)
@@ -43,6 +46,8 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult AddToReport(int id)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             var product = db.Products.Find(id);
             if (product == null)
             {
@@ -63,6 +68,8 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult Orders()
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             List<int> reportProductID = Session["ReportProducts"] as List<int>;
             List<Product> reportProducts = new List<Product>();
             decimal totalPrice = 0;
@@ -96,6 +103,8 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult RemoveFromReport(int id)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             List<int> reportProducts = Session["ReportProducts"] as List<int>;
             if (reportProducts != null)
             {
@@ -109,6 +118,8 @@ namespace ClinicaVeterinaria.Controllers
         [HttpPost]
         public ActionResult Checkout(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             if (codiceFiscale.Length != 16)
             {
                 TempData["ErrorMessage"] = "Il codice fiscale deve essere lungo 16 caratteri.";
@@ -170,6 +181,8 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult CheckoutSummary(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             var summaryViewModel = new CheckoutSummaryViewModel();
 
             summaryViewModel.Animale = db.Beasts.FirstOrDefault(b => b.CodiceFiscale == codiceFiscale);
@@ -193,6 +206,8 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult AddNewProduct()
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             ViewBag.SupplierID = new SelectList(db.Suppliers, "SupplierID", "NomeAzienda");
             ViewBag.DrawerID = new SelectList(db.Drawers, "DrawerID", "DrawerID");
             return View();
@@ -200,6 +215,10 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult MedicinaXCliente()
         {
+
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
+
             var proprietari = db.Beasts.Select(b => new
             {
                 NomeProprietario = b.Proprietario,
@@ -212,6 +231,8 @@ namespace ClinicaVeterinaria.Controllers
         }
         public ActionResult GetProdottiByCodiceFiscale(string codiceFiscale)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             var vendite = db.Sales
                             .Where(s => s.CodiceFiscale == codiceFiscale)
                             .Select(s => s.ProductID)
@@ -235,6 +256,8 @@ namespace ClinicaVeterinaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddNewProduct([Bind(Include = "ProductID,Nome,Descrizione,SupplierID,DrawerID,Prezzo")] Product product)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
@@ -250,12 +273,16 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult Ricetta()
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             return View();
         }
 
         [HttpPost]
         public ActionResult Ricetta(string MicrochipCodice)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
 
             var beast = db.Beasts.FirstOrDefault(b => b.MicrochipCodice == MicrochipCodice);
 
@@ -278,12 +305,16 @@ namespace ClinicaVeterinaria.Controllers
         }
         public ActionResult MedicinaXData()
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             return View();
         }
 
         [HttpPost]
         public ActionResult GetMedicineByDate(DateTime dataVendita)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             var productIds = db.Sales
                                 .Where(s => DbFunctions.TruncateTime(s.DataVendita) == dataVendita.Date)
                                 .Select(s => s.ProductID)
@@ -299,6 +330,8 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult FarmacistaDet(int? id)
         {
+            var redirect = RedirectToLoginIfNotAuthenticated();
+            if (redirect != null) return redirect;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -312,6 +345,16 @@ namespace ClinicaVeterinaria.Controllers
 
             return View(farmacista);
         }
+        private ActionResult RedirectToLoginIfNotAuthenticated()
+        {
+            if (Session["UserF"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return null; 
+        }
+
 
     }
 }
