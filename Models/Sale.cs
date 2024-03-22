@@ -24,6 +24,9 @@ namespace ClinicaVeterinaria.Models
 
         public DateTime DataVendita { get; set; }
 
+        [Required]
+        public int Quantita { get; set; }
+
         public virtual Pharmacist Pharmacist { get; set; }
 
         public virtual Product Product { get; set; }

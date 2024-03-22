@@ -15,21 +15,31 @@
         <tr>
             <th>Prodotto</th>
             <th>Venduto il</th>
-            <th>Prezzo</th>
+            <th>Quantità</th>
+            <th>Prezzo Unitario</th>
+            <th>Prezzo Totale</th>
         </tr>
     </thead>
-    <p>Totale speso: @String.Format("{0:C}", Model.PrezzoTotale)</p>
     <tbody>
         @foreach (var vendita in Model.Vendite)
         {
             <tr>
                 <td>@vendita.Product.Nome</td>
                 <td>@vendita.DataVendita.ToString("dd/MM/yyyy")</td>
+                <td>@vendita.Quantita</td>
+                <td>@String.Format("{0:C}", vendita.Product.Prezzo)</td>
                 <td>@String.Format("{0:C}", vendita.Prezzo)</td>
             </tr>
         }
     </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="4">Totale speso:</th>
+            <th>@String.Format("{0:C}", Model.PrezzoTotale)</th>
+        </tr>
+    </tfoot>
 </table>
+
 
 <div class="d-flex justify-content-end">
     <button id="printButton" class="btn btn-primary d-print-none">Stampa PDF</button>
