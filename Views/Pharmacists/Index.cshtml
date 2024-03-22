@@ -17,6 +17,13 @@
             <button type="submit" class="btn btn-primary">Cerca</button>
         </div>
     </div>
+
+    <div class="input-group mb-3">
+        @Html.TextBox("descriptionSearch", null, new { @class = "form-control", @placeholder = "Uso Prodotto" })
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Cerca per Uso</button>
+        </div>
+    </div>
 }
 @Html.ActionLink("Ordine", "Orders", "Pharmacists", new { @class = "btn btn-warning" })
 @Html.ActionLink("Aggiungi Nuovo Prodotto", "AddNewProduct", "Pharmacists", new { @class = "btn btn-success" })
