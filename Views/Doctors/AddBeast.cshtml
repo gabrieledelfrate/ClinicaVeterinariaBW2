@@ -11,6 +11,13 @@
     Per favore, compila tutti i campi obbligatori.
 </div>
 
+@if (TempData["MessageDate"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["MessageDate"]
+                </div>
+            }
+
 
 
 @using (Html.BeginForm("AddBeast", "Doctors", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -181,6 +188,8 @@
         }
     };
     //fine codice metha
+
+
 </script>
 
 @*Fine Codice Pes*@
