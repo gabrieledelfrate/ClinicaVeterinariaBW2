@@ -43,7 +43,7 @@
             <div class="form-group mt-3">
                 @Html.LabelFor(model => model.CostoGiornalieroRicovero, "Costo Giornaliero Ricovero", htmlAttributes: new { @class = "control-label" })
                 <div class="">
-                    @Html.TextBoxFor(model => model.CostoGiornalieroRicovero, "{0:n}", new { @class = "form-control border-success", @type = "number", @step = "1.00" })
+                    @Html.TextBoxFor(model => model.CostoGiornalieroRicovero, "{0:n}", new { @class = "form-control border-success", @type = "number", @step = "1.00", min="1"})
                     @Html.ValidationMessageFor(model => model.CostoGiornalieroRicovero, "", new { @class = "text-danger" })
                 </div>
             </div>
