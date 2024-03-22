@@ -13,16 +13,22 @@ namespace ClinicaVeterinaria.Controllers
         private DBContext db = new DBContext();
 
 
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, string descriptionSearch)
         {
             var redirect = RedirectToLoginIfNotAuthenticated();
             if (redirect != null) return redirect;
-
             IQueryable<Product> products = db.Products;
 
             if (!string.IsNullOrEmpty(search))
             {
-                products = products.Where(s => s.Nome.Contains(search));
+                products = products.Where(p => p.Nome.Contains(search));
+                return View(products.ToList());
+            }
+
+            if (!string.IsNullOrEmpty(descriptionSearch))
+            {
+                products = products.Where(p => p.Descrizione.Contains(descriptionSearch));
+                return View(products.ToList());
             }
 
             return View(products.ToList());

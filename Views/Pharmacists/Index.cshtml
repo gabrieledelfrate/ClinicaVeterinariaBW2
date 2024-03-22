@@ -12,6 +12,11 @@
             @Html.TextBox("search", null, new { @class = "form-control", @placeholder = "Nome Prodotto" })
                 <button type="submit" class="btn text-white" style="background-color:darkcyan">Cerca</button>
         </div>
+  
+  <div class="input-group mb-3">
+        @Html.TextBox("descriptionSearch", null, new { @class = "form-control", @placeholder = "Uso Prodotto" })
+            <button type="submit" class="btn btn-primary">Cerca per Uso</button>
+    </div>
     }
 
 <div>
@@ -19,10 +24,6 @@
     <a href="@Url.Action("AddNewProduct", "Pharmacists")" class="btn btn-success float-right" style="background-color:darkcyan">Aggiungi Nuovo Prodotto</a>
 </div>
 </div>
-
-
-
-
 
 @if (TempData["SuccessMessage"] != null)
 {
