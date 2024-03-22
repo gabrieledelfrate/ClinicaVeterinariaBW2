@@ -5,18 +5,20 @@
 }
 <h2 class=" pb-3" style="color:darkcyan;border-bottom:1px solid; border-color:darkcyan">Pagina Prodotti</h2>
 <h3 style="color:darkcyan">Cerca Prodotti</h3>
-<div class="d-flex justify-content-between my-3">
+<div class="d-flex justify-content-between align-content-center my-3">
     @using (Html.BeginForm("Index", "Pharmacists", FormMethod.Get, new { @class = "form-inline" }))
     {
-        <div class="input-group m-0">
-            @Html.TextBox("search", null, new { @class = "form-control", @placeholder = "Nome Prodotto" })
+        <div class="d-flex align-items-center">
+            <div class="input-group m-0">
+                @Html.TextBox("search", null, new { @class = "form-control", @placeholder = "Nome Prodotto" })
                 <button type="submit" class="btn text-white" style="background-color:darkcyan">Cerca</button>
+            </div>
+
+            <div class="input-group ms-4">
+                @Html.TextBox("descriptionSearch", null, new { @class = "form-control", @placeholder = "Uso Prodotto" })
+                <button type="submit" class="btn text-white" style="background-color:darkcyan">Cerca</button>
+            </div>
         </div>
-  
-  <div class="input-group mb-3">
-        @Html.TextBox("descriptionSearch", null, new { @class = "form-control", @placeholder = "Uso Prodotto" })
-            <button type="submit" class="btn btn-primary">Cerca per Uso</button>
-    </div>
     }
 
 <div>
@@ -40,7 +42,7 @@ else
 {
     <table class="table">
         <thead>
-            <tr>
+            <tr class="align-items-center">
                 <th>Nome</th>
                 <th>Descrizione</th>
                 <th>Prezzo</th>
@@ -55,8 +57,8 @@ else
                     <td>@Html.DisplayFor(modelItem => item.Descrizione)</td>
                     <td>@Html.DisplayFor(modelItem => item.Prezzo)€</td>
                     <td class="d-flex justify-content-center">
-                        @Html.ActionLink("Aggiungi All'ordine", "AddToReport", new { id = item.ProductID }, new { @class = "btn me-2 btn-success" })
-                        @Html.ActionLink("Dettagli", "Details", new { id = item.ProductID }, new { @class = "btn ms-2 btn-info" })
+                        @Html.ActionLink("Aggiungi All'ordine", "AddToReport", new { id = item.ProductID }, new { @class = "btn me-2 text-white", style = "background-color:darkcyan" })
+                        @Html.ActionLink("Dettagli", "Details", new { id = item.ProductID }, new { @class = "btn ms-2 text-white", style = "background-color:darkcyan" })
                     </td>
                 </tr>
             }
