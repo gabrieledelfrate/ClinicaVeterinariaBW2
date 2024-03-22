@@ -1,51 +1,59 @@
 ﻿@model ClinicaVeterinaria.Models.Hospitalization
 
-@using (Html.BeginForm("AddHospitalization", "Doctors", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+
+@if (TempData["MessageOsp"] != null)
 {
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DataInizioRicovero, "Data Inizio Ricovero", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.DataInizioRicovero, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
-            @Html.ValidationMessageFor(model => model.DataInizioRicovero, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Prognosi,"Prognosi", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Prognosi, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Prognosi, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.Label("Beast", "Bestia", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.BeastID, (IEnumerable<SelectListItem>)ViewBag.BeastList, "Select Beast", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.BeastID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.Label("Doctor", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, "Select Doctor", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DoctorID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.CostoGiornalieroRicovero, "Costo Giornaliero Ricovero", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.CostoGiornalieroRicovero, "{0:n}", new { @class = "form-control", @type = "number", @step = "1.00" })
-            @Html.ValidationMessageFor(model => model.CostoGiornalieroRicovero, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10 mt-1">
-            <button type="submit" class="btn btn-success">Ricovera Bestia</button>
-        </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["MessageOsp"]
     </div>
 }
+
+    @using (Html.BeginForm("AddHospitalization", "Doctors", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataInizioRicovero, "Data Inizio Ricovero", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DataInizioRicovero, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.DataInizioRicovero, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Prognosi, "Prognosi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Prognosi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Prognosi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Beast", "Bestia", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.BeastID, (IEnumerable<SelectListItem>)ViewBag.BeastList, "Select Beast", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BeastID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Doctor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, "Select Doctor", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DoctorID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CostoGiornalieroRicovero, "Costo Giornaliero Ricovero", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CostoGiornalieroRicovero, "{0:n}", new { @class = "form-control", @type = "number", @step = "1.00" })
+                @Html.ValidationMessageFor(model => model.CostoGiornalieroRicovero, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 mt-1">
+                <button type="submit" class="btn btn-success">Ricovera Bestia</button>
+            </div>
+        </div>
+    }

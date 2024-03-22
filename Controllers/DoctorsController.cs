@@ -48,6 +48,12 @@ namespace ClinicaVeterinaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddBeast(Beast beast, HttpPostedFileBase Foto)
         {
+            if (beast.DataRegistrazione < beast.DataNascita)
+            {
+                TempData["MessageDate"] = "la data di nascita non può essere posteriore alla data di registrazione";
+                return View(beast);
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -96,15 +102,32 @@ namespace ClinicaVeterinaria.Controllers
             ViewBag.BeastList = new SelectList(beasts, "BeastID", "Nome");
             ViewBag.DoctorList = new SelectList(doctors, "DoctorID", "Nome");
 
-            return View();
+            var tuoModello = new Hospitalization();
+            tuoModello.DataInizioRicovero = tuoModello.DataInizioRicovero.Date != DateTime.MinValue.Date ? tuoModello.DataInizioRicovero : DateTime.Now;
+
+            return View(tuoModello);
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddExamination([Bind(Include = "ExaminationID, DataVisita, PatologieRiscontrate, NumeroRicetta, Ricetta, Prezzo, DoctorID, BeastID")]  Examination esame)
         {
+
             ViewBag.Dottori = db.Doctors.ToList();
             ViewBag.Bestie = db.Beasts.ToList();
+
+            var beast = db.Beasts.SingleOrDefault(b => b.BeastID == esame.BeastID);
+
+            if (beast != null)
+            {
+
+                if (beast.DataRegistrazione > esame.DataVisita)
+                {
+                    TempData["MessageReg"] = "La data di registrazione non può essere successiva alla data della visita.";
+                    return View(esame);
+                }
+            }
 
             if (esame.DoctorID <= 0)
             {
@@ -173,7 +196,18 @@ namespace ClinicaVeterinaria.Controllers
             {
                 ViewBag.DoctorList = new SelectList(db.Doctors.ToList(), "DoctorID", "Nome");
                 ViewBag.BeastList = new SelectList(db.Beasts.ToList(), "BeastID", "Nome");
-   
+
+                var beast = db.Beasts.SingleOrDefault(b => b.BeastID == hospitalization.BeastID);
+
+                if (beast != null)
+                {
+                    if (beast.DataRegistrazione > hospitalization.DataInizioRicovero)
+                    {
+                        TempData["MessageOsp"] = "La data di registrazione non può essere successiva all'inizio del ricovero.";
+                        return View(hospitalization);
+                    }
+                }
+
                 if (hospitalization.DoctorID <= 0)
                 {
                     ModelState.AddModelError("DoctorID", "La selezione del dottore è obbligatoria.");
