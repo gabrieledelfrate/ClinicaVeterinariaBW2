@@ -10,14 +10,14 @@
 <p>Nome Farmacista: @Model.NomeFarmacista</p>
 
 <h3>Prodotti Acquistati</h3>
+<h5 colspan="4">Totale speso:</h5>
+<h5>@String.Format("{0:C}", Model.PrezzoTotale)</h5>
 <table class="table">
     <thead>
         <tr>
             <th>Prodotto</th>
             <th>Venduto il</th>
-            <th>Quantità</th>
-            <th>Prezzo Unitario</th>
-            <th>Prezzo Totale</th>
+            <th>Prezzo</th>
         </tr>
     </thead>
     <tbody>
@@ -26,18 +26,10 @@
             <tr>
                 <td>@vendita.Product.Nome</td>
                 <td>@vendita.DataVendita.ToString("dd/MM/yyyy")</td>
-                <td>@vendita.Quantita</td>
-                <td>@String.Format("{0:C}", vendita.Product.Prezzo)</td>
                 <td>@String.Format("{0:C}", vendita.Prezzo)</td>
             </tr>
         }
     </tbody>
-    <tfoot>
-        <tr>
-            <th colspan="4">Totale speso:</th>
-            <th>@String.Format("{0:C}", Model.PrezzoTotale)</th>
-        </tr>
-    </tfoot>
 </table>
 
 
