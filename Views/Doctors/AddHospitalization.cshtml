@@ -8,52 +8,60 @@
     </div>
 }
 
-    @using (Html.BeginForm("AddHospitalization", "Doctors", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@using (Html.BeginForm("AddHospitalization", "Doctors", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <h2 class="text-success border-bottom border-success pb-3">Aggiungi Ricovero</h2>
+    <h3 class="text-success">Dettagli Ricovero</h3>
+    <div class="d-flex">
+        <div class="me-3 mt-2">
+            <div class="form-group ">
+                @Html.LabelFor(model => model.DataInizioRicovero, "Data Inizio Ricovero", htmlAttributes: new { @class = "control-label" })
+                <div class="">
+                    @Html.TextBoxFor(model => model.DataInizioRicovero, "{0:yyyy-MM-dd}", new { @class = "form-control border-success", @type = "date" })
+                    @Html.ValidationMessageFor(model => model.DataInizioRicovero, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataInizioRicovero, "Data Inizio Ricovero", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.DataInizioRicovero, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
-                @Html.ValidationMessageFor(model => model.DataInizioRicovero, "", new { @class = "text-danger" })
+            <div class="form-group mt-3">
+                @Html.LabelFor(model => model.Prognosi, "Prognosi", htmlAttributes: new { @class = "control-label" })
+                <div class="">
+                    @Html.EditorFor(model => model.Prognosi, new { htmlAttributes = new { @class = "form-control border-success" } })
+                    @Html.ValidationMessageFor(model => model.Prognosi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                @Html.Label("Beast", "Bestia", htmlAttributes: new { @class = "control-label" })
+                <div>
+                    @Html.DropDownListFor(model => model.BeastID, (IEnumerable<SelectListItem>)ViewBag.BeastList, "Select Beast", new { @class = "form-control border-success" })
+                    @Html.ValidationMessageFor(model => model.BeastID, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
+        <div class="ms-3 mt-2">
+            <div class="form-group">
+                @Html.Label("Doctor", htmlAttributes: new { @class = "control-label" })
+                <div class="">
+                    @Html.DropDownListFor(model => model.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, "Select Doctor", new { @class = "form-control border-success" })
+                    @Html.ValidationMessageFor(model => model.DoctorID, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Prognosi, "Prognosi", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Prognosi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Prognosi, "", new { @class = "text-danger" })
+            <div class="form-group mt-3">
+                @Html.LabelFor(model => model.CostoGiornalieroRicovero, "Costo Giornaliero Ricovero", htmlAttributes: new { @class = "control-label" })
+                <div class="">
+                    @Html.TextBoxFor(model => model.CostoGiornalieroRicovero, "{0:n}", new { @class = "form-control border-success", @type = "number", @step = "1.00" })
+                    @Html.ValidationMessageFor(model => model.CostoGiornalieroRicovero, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            @Html.Label("Beast", "Bestia", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.BeastID, (IEnumerable<SelectListItem>)ViewBag.BeastList, "Select Beast", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BeastID, "", new { @class = "text-danger" })
-            </div>
+    </div>
+    <div class="form-group d-flex mt-4 align-items-center">
+        <div class="">
+            <button type="submit" class="btn btn-success p-2">Ricovera Bestia</button>
         </div>
-
-        <div class="form-group">
-            @Html.Label("Doctor", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, "Select Doctor", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DoctorID, "", new { @class = "text-danger" })
-            </div>
+        <div class="ms-3">
+            @Html.ActionLink("Torna Alle Bestie", "Index", null, new { @class = "btn btn-secondary p-2" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CostoGiornalieroRicovero, "Costo Giornaliero Ricovero", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.CostoGiornalieroRicovero, "{0:n}", new { @class = "form-control", @type = "number", @step = "1.00" })
-                @Html.ValidationMessageFor(model => model.CostoGiornalieroRicovero, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 mt-1">
-                <button type="submit" class="btn btn-success">Ricovera Bestia</button>
-            </div>
-        </div>
-    }
+    </div>
+}

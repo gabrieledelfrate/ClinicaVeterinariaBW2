@@ -67,7 +67,7 @@ namespace ClinicaVeterinaria.Controllers
 
                     db.Beasts.Add(beast);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Doctors");
+                    return RedirectToAction("Details", new { id = beast.BeastID });
                 }
                 catch (Exception ex)
                 {

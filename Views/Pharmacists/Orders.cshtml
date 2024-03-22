@@ -17,9 +17,7 @@ else
                 <tr>
                     <th>Nome</th>
                     <th>Descrizione</th>
-                    <th>Prezzo Unitario</th>
-                    <th>Quantità</th>
-                    <th>Prezzo Totale</th>
+                    <th>Prezzo</th>
                     <th>Azioni</th>
                 </tr>
             </thead>
@@ -30,13 +28,6 @@ else
                         <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                         <td>@Html.DisplayFor(modelItem => item.Descrizione)</td>
                         <td>@Html.DisplayFor(modelItem => item.Prezzo)€</td>
-                        <td>
-                            <button type="button" class="btn btn-secondary quantity-decrease" data-product-id="@item.ProductID">-</button>
-                            <input type="text" class="quantity-input" name="quantities[@item.ProductID]" value="1" style="width: 40px;" readonly />
-                            <button type="button" class="btn btn-secondary quantity-increase" data-product-id="@item.ProductID">+</button>
-                            <input type="hidden" name="productQuantities[@item.ProductID]" value="1" class="product-quantity" />
-                        </td>
-                        <td class="total-price" data-unit-price="@item.Prezzo" data-product-id="@item.ProductID">@item.Prezzo€</td>
                         <td>
                             @Html.ActionLink("Rimuovi", "RemoveFromReport", new { id = item.ProductID }, new { @class = "btn btn-danger" })
                         </td>
@@ -76,29 +67,4 @@ else
         @Html.DropDownList("pharmacistId", (SelectList)ViewBag.Pharmacists, "Seleziona un farmacista", new { @class = "form-control" })
     </div>
     <button type="submit" class="btn btn-primary mt-2">Paga Ora</button>
-}
-
-@section Scripts {
-    <script>
-        document.querySelectorAll('.quantity-increase, .quantity-decrease').forEach(button => {
-            button.addEventListener('click', function () {
-                const isIncrease = this.classList.contains('quantity-increase');
-                const productId = this.getAttribute('data-product-id');
-                const quantityInput = document.querySelector(`.quantity-input[name='quantities[${productId}]']`);
-                const totalPriceElement = document.querySelector(`.total-price[data-product-id='${productId}']`);
-                const unitPrice = parseFloat(totalPriceElement.getAttribute('data-unit-price').replace('€', ''));
-                let quantity = parseInt(quantityInput.value);
-                quantity = isIncrease ? quantity + 1 : (quantity > 1 ? quantity - 1 : quantity);
-                quantityInput.value = quantity;
-                totalPriceElement.textContent = `${(unitPrice * quantity).toFixed(2)}€`;
-
-                const totalPrices = document.querySelectorAll('.total-price');
-                let grandTotal = 0;
-                totalPrices.forEach(price => {
-                    grandTotal += parseFloat(price.textContent.replace('€', ''));
-                });
-                document.querySelector('.grand-total').textContent = `${grandTotal.toFixed(2)}€`;
-            });
-        });
-    </script>
 }
