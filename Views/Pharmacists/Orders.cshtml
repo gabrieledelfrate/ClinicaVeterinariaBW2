@@ -43,13 +43,19 @@ else
 }
 @using (Html.BeginForm("Checkout", "Pharmacists", FormMethod.Post, new { @class = "container mt-5" }))
 {
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
     <div class="form-group">
         <label for="codiceFiscale">Codice Fiscale:</label>
         <input type="text" id="codiceFiscale" name="codiceFiscale" class="form-control" required />
     </div>
     <div class="form-group">
         <label for="numeroRicetta">Numero Ricetta:</label>
-        <input type="text" id="numeroRicetta" name="numeroRicetta" class="form-control" required />
+        <input type="number" id="numeroRicetta" name="numeroRicetta" class="form-control"  required min="1" />
     </div>
     <div class="form-group">
         <label for="dataVendita">Data Vendita:</label>

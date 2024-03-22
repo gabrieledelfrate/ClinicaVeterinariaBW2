@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -10,61 +10,118 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-success">
-        <div class="container">
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Attiva/Disattiva spostamento" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    @{
-                        var currentUrl = Request.Url.AbsolutePath.ToLower();
-                        var folder = currentUrl.Split('/')[1];
-                    }
+    @{
+        var currentUrl = Request.Url.AbsolutePath.ToLower();
+        var folder = currentUrl.Split('/')[1];
+    }
 
-                    @if (folder == "doctors")
-                    {
+    @if (folder == "doctors")
+    {
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-success d-print-none">
+            <div class="container">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Attiva/Disattiva spostamento" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
                         @Html.ActionLink("ClinicaPerBestie", "Index", "Doctors", new { area = "" }, new { @class = "navbar-brand" })
                         <li>@Html.ActionLink("Bestie", "Index", "Doctors", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Ricoveri Attivi", "ActiveHospitalizations", "Doctors", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
-                    else if (folder == "pharmacists")
-                    {
+                    </ul>
+                </div>
+                @if (Session["UserM"] != null)
+                {
+                    <a class="me-5 text-white" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserM"]</a>
+                }
+                else if (Session["UserF"] != null)
+                {
+                    <a class="me-5 text-white" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a>//TODO
+                }
+                @if (Request.Cookies[".ASPXAUTH"] != null)
+                {
+                    <form action="@Url.Action("LogoutFarmacia", "Home")" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                }
+            </div>
+        </nav>
+    }
+    else if (folder == "pharmacists")
+    {
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark d-print-none" style="background-color:darkcyan">
+            <div class="container">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Attiva/Disattiva spostamento" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
                         @Html.ActionLink("FarmaciaXBestie", "Index", "Pharmacists", new { area = "" }, new { @class = "navbar-brand" })
                         <li>@Html.ActionLink("Prodotti", "Index", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Medicina per Data", "MedicinaXData", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Ordini", "Orders", "Pharmacists",new { area = "" }, new { @class = "nav-link" })</li>
+<li>@Html.ActionLink("Medicina per Data", "MedicinaXData", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Medicina per Cliente", "MedicinaXCliente", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
-                    else
-                    {
-                        @Html.ActionLink("ClinicaPerBestie", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
-                </ul>
+                    </ul>
+                </div>
+                @if (Session["UserM"] != null)
+                {
+                    <a class="me-5 text-white" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserM"]</a>
+                }
+                else if (Session["UserF"] != null)
+                {
+                    <a class="me-5 text-white" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a>//TODO
+                }
+                @if (Request.Cookies[".ASPXAUTH"] != null)
+                {
+                    <form action="@Url.Action("LogoutFarmacia", "Home")" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                }
             </div>
-            @if (Session["UserM"] != null)
-            {
-                <a class="me-5 text-white" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserM"]</a>
-            }
-            else if (Session["UserF"] != null)
-            {
-                <a class="me-5 text-white" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a> //TODO
-            }
-            @if (Request.Cookies[".ASPXAUTH"] != null)
-            {
-                <form action="@Url.Action("LogoutFarmacia", "Home")" method="post">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-danger">Logout</button>
-                </form>
-            }
-        </div>
-    </nav>
+        </nav>
+    }
+    else
+    {
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-success d-print-none">
+            <div class="container">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Attiva/Disattiva spostamento" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @Html.ActionLink("PortalePerBestie", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                </div>                
+            </div>
+        </nav>
+    }
+
     <div class="container body-content">
         @RenderBody()
-        <footer class="mt-4 border-top border-success">
-            <p class="text-success mt-2">&copy; @DateTime.Now.Year - Guerrieri Corp.</p>
-        </footer>
+        @if (folder == "doctors")
+        {
+            <footer class="mt-4 border-top border-success">
+                <p class="text-success mt-2">&copy; @DateTime.Now.Year - Guerrieri Corp.</p>
+            </footer>
+        }
+        else if (folder == "pharmacists")
+        {
+            <footer class="mt-4" style="border-top:1px solid; border-color:darkcyan" >
+                <p class="mt-2" style="color:darkcyan">&copy; @DateTime.Now.Year - Guerrieri Corp.</p>
+            </footer>
+        }
+        else
+        {
+            <footer class="mt-4 border-top border-success">
+                <p class="text-success mt-2">&copy; @DateTime.Now.Year - Guerrieri Corp.</p>
+            </footer>
+        }
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")
