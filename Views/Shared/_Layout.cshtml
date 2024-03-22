@@ -32,11 +32,11 @@
                 </div>
                 @if (Session["UserM"] != null)
                 {
-                    <a class="me-5 text-white" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserM"]</a>
+                    <a class="me-5 welcome-btn" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserM"]</a>
                 }
                 else if (Session["UserF"] != null)
                 {
-                    <a class="me-5 text-white" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a>//TODO
+                    <a class="me-5 welcome-btn" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a>//TODO
                 }
                 @if (Request.Cookies[".ASPXAUTH"] != null)
                 {
@@ -67,7 +67,7 @@
                 </div>
                 @if (Session["UserM"] != null)
                 {
-                    <a class="me-5 text-white" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserM"]</a>
+                    <a class="me-5 welcome-btn" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserM"]</a>
                 }
                 else if (Session["UserF"] != null)
                 {
