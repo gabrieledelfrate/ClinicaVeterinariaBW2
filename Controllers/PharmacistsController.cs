@@ -109,13 +109,17 @@ namespace ClinicaVeterinaria.Controllers
         [HttpPost]
         public ActionResult Checkout(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita)
         {
-            var cliente = db.Beasts.FirstOrDefault(c => c.CodiceFiscale == codiceFiscale);
-
-            if (cliente == null)
+            if (codiceFiscale.Length != 16)
             {
-                TempData["ErrorMessage"] = "Codice fiscale non trovato.";
-                return View();
+                TempData["ErrorMessage"] = "Il codice fiscale deve essere lungo 16 caratteri.";
+                return RedirectToAction("Orders");
+            }
 
+            var animal = db.Beasts.FirstOrDefault(b => b.CodiceFiscale == codiceFiscale);
+            if (animal == null)
+            {
+                TempData["ErrorMessage"] = "Il codice fiscale inserito non è associato a nessun animale.";
+                return RedirectToAction("Orders");
             }
 
             List<int> reportProductIDs = Session["ReportProducts"] as List<int>;
