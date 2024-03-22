@@ -60,7 +60,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         @Html.ActionLink("FarmaciaXBestie", "Index", "Pharmacists", new { area = "" }, new { @class = "navbar-brand" })
                         <li>@Html.ActionLink("Prodotti", "Index", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Ordine", "Orders", "Pharmacists",new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Ordini", "Orders", "Pharmacists",new { area = "" }, new { @class = "nav-link" })</li>
 <li>@Html.ActionLink("Medicina per Data", "MedicinaXData", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Medicina per Cliente", "MedicinaXCliente", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
@@ -111,8 +111,8 @@
         }
         else if (folder == "pharmacists")
         {
-            <footer class="mt-4 border-top border-success" >
-                <p class="text-success mt-2">&copy; @DateTime.Now.Year - Guerrieri Corp.</p>
+            <footer class="mt-4" style="border-top:1px solid; border-color:darkcyan" >
+                <p class="mt-2" style="color:darkcyan">&copy; @DateTime.Now.Year - Guerrieri Corp.</p>
             </footer>
         }
         else
