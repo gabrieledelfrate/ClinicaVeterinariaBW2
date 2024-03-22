@@ -109,6 +109,15 @@ namespace ClinicaVeterinaria.Controllers
         [HttpPost]
         public ActionResult Checkout(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita)
         {
+            var cliente = db.Beasts.FirstOrDefault(c => c.CodiceFiscale == codiceFiscale);
+
+            if (cliente == null)
+            {
+                TempData["ErrorMessage"] = "Codice fiscale non trovato.";
+                return View();
+
+            }
+
             List<int> reportProductIDs = Session["ReportProducts"] as List<int>;
             if (reportProductIDs != null && reportProductIDs.Count > 0)
             {
