@@ -76,6 +76,14 @@ namespace ClinicaVeterinaria.Controllers
         {
             var redirect = RedirectToLoginIfNotAuthenticated();
             if (redirect != null) return redirect;
+
+            int pharmacistId = (int)Session["PharmacistID"];
+            var pharmacist = db.Pharmacists.FirstOrDefault(p => p.PharmacistID == pharmacistId);
+            string pharmacistName = pharmacist != null ? pharmacist.Nome : "Nome non trovato";
+
+           
+            ViewBag.PharmacistName = pharmacistName;
+
             List<int> reportProductID = Session["ReportProducts"] as List<int>;
             List<Product> reportProducts = new List<Product>();
             decimal totalPrice = 0;
@@ -103,8 +111,11 @@ namespace ClinicaVeterinaria.Controllers
 
             ViewBag.Pharmacists = new SelectList(pharmacists, "PharmacistID", "Name");
 
+            ViewBag.PharmacistID = pharmacistId;
+
             return View(reportProducts);
         }
+
 
 
         public ActionResult RemoveFromReport(int id)
@@ -121,8 +132,7 @@ namespace ClinicaVeterinaria.Controllers
             return RedirectToAction("Orders");
         }
 
-        [HttpPost]
-        public ActionResult Checkout(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita)
+        public ActionResult Checkout(string codiceFiscale, string numeroRicetta, DateTime dataVendita)
         {
             var redirect = RedirectToLoginIfNotAuthenticated();
             if (redirect != null) return redirect;
@@ -131,6 +141,8 @@ namespace ClinicaVeterinaria.Controllers
                 TempData["ErrorMessage"] = "Il codice fiscale deve essere lungo 16 caratteri.";
                 return RedirectToAction("Orders");
             }
+
+            int pharmacistId = (int)Session["PharmacistID"]; 
 
             var animal = db.Beasts.FirstOrDefault(b => b.CodiceFiscale == codiceFiscale);
             if (animal == null)
@@ -161,19 +173,6 @@ namespace ClinicaVeterinaria.Controllers
                 }
                 db.SaveChanges();
 
-                var pharmacist = db.Pharmacists.FirstOrDefault(p => p.PharmacistID == pharmacistId);
-                string nomeFarmacista = pharmacist != null ? pharmacist.Nome : "Nome non trovato";
-
-
-                var summaryViewModel = new CheckoutSummaryViewModel
-                {
-                    NumeroRicetta = numeroRicetta,
-                    NomeFarmacista = nomeFarmacista,
-                    DataVendita = dataVendita
-                };
-
-                Session["ReportProducts"] = null;
-
                 TempData["SuccessMessage"] = "Checkout completato con successo.";
                 return RedirectToAction("CheckoutSummary", new { codiceFiscale = codiceFiscale, numeroRicetta = numeroRicetta, pharmacistId = pharmacistId, dataVendita = dataVendita });
             }
@@ -183,6 +182,7 @@ namespace ClinicaVeterinaria.Controllers
                 return RedirectToAction("Orders");
             }
         }
+
 
 
         public ActionResult CheckoutSummary(string codiceFiscale, string numeroRicetta, int pharmacistId, DateTime dataVendita)
