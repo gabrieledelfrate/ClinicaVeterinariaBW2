@@ -64,10 +64,11 @@
                     </div>
 
                     @Html.Hidden("BeastID", (int)ViewBag.Bestia.BeastID)
-                    <div class="mt-3">
-                        @Html.Label("BeastID", "Animale", new { @class = "form-label" })
-                        <p class="form-control-plaintext">@ViewBag.Bestia.Nome</p>
-                    </div>
+                <div class="mt-3">
+                    @Html.Label("BeastID", "Animale", new { @class = "form-label" })
+                    @Html.TextBox("Nome Bestia", ViewBag.Bestia.Nome as string, new { @class = "form-control", @readonly = "readonly" })
+
+                </div>
 
                 </div>
             </div>
