@@ -67,8 +67,9 @@ else
     <div class="ms-3">
         <div class="form-group">
             <label for="dataVendita">Data Vendita:</label>
-            <input type="date" id="dataVendita" name="dataVendita" style="border-color:darkcyan" class="form-control" required />
+            <input type="date" id="dataVendita" name="dataVendita" value="@DateTime.Today.ToString("yyyy-MM-dd")" style="border-color:darkcyan" class="form-control" readonly required />
         </div>
+
         @Html.Hidden("PharmacistID", (int)Session["PharmacistID"])
         <div class="mt-3">
             @Html.Label("NomeDottore", "Dottore", new { @class = "form-label" })
