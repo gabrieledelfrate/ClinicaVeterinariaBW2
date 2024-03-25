@@ -40,10 +40,12 @@
         </div>
         <div class="ms-3 mt-2">
             <div class="form-group">
-                @Html.Label("Doctor", htmlAttributes: new { @class = "control-label" })
-                <div class="">
-                    @Html.DropDownListFor(model => model.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, "Select Doctor", new { @class = "form-control border-success" })
-                    @Html.ValidationMessageFor(model => model.DoctorID, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.DoctorID)
+
+
+                <div class="mt-3">
+                    @Html.Label("NomeDottore", "Dottore", new { @class = "form-label" })
+                    @Html.TextBox("NomeDottore", Session["UserM"] as string, new { @class = "form-control", @readonly = "readonly" })
                 </div>
             </div>
 

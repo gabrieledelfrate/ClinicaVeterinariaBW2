@@ -81,20 +81,26 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         //Fine Codice Pes
-        
+
 
         // GET: Doctors
         // CODICE MARCO SILVERI
 
         [HttpGet]
-        public ActionResult AddExamination()
+        public ActionResult AddExamination(int id)
         {
-            var Bestie = db.Beasts.ToList();
-            var Dottori = db.Doctors.ToList();
-            ViewBag.Bestie = Bestie;
-            ViewBag.Dottori = Dottori;
+            var beast = db.Beasts.FirstOrDefault(x => x.BeastID == id);
+            if (beast == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Bestia = beast;
             return View();
         }
+
+
+
         [HttpGet]
         public ActionResult AddHospitalization()
         {
@@ -115,8 +121,7 @@ namespace ClinicaVeterinaria.Controllers
         public ActionResult AddExamination([Bind(Include = "ExaminationID, DataVisita, PatologieRiscontrate, NumeroRicetta, Ricetta, Prezzo, DoctorID, BeastID")]  Examination esame)
         {
 
-            ViewBag.Dottori = db.Doctors.ToList();
-            ViewBag.Bestie = db.Beasts.ToList();
+            
 
             var beast = db.Beasts.SingleOrDefault(b => b.BeastID == esame.BeastID);
 
