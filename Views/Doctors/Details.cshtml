@@ -42,7 +42,8 @@
 
         <!-- Colonna centrale - Esami -->
         <div class="col-lg-4 mb-5">
-            <a href="/Doctors/AddExamination" class="btn btn-success btn-lg mb-4">Aggiungi Esame</a>
+            <a href="@Url.Action("AddExamination", "Doctors", new { id = @Model.BeastID })" class="btn btn-success btn-lg mb-4">Aggiungi Esame</a>
+            @*<a href="/Doctors/AddExamination" class="btn btn-success btn-lg mb-4">Aggiungi Esame</a>*@
 
             <div class="card border-success">
                 <div class="card-header bg-success text-white">
@@ -108,8 +109,8 @@
 
         <!-- Ricoveri colonna destra -->
         <div class="col-md-4">
-
-            <a href="/Doctors/AddHospitalization" class="btn btn-success btn-lg mb-4">Aggiungi Ricovero</a>
+            <a href="@Url.Action("AddHospitalization", "Doctors", new { id = @Model.BeastID })" class="btn btn-success btn-lg mb-4">Aggiungi Ricovero</a>
+            @*<a href="/Doctors/AddHospitalization" class="btn btn-success btn-lg mb-4">Aggiungi Ricovero</a>*@
 
             <div class="card border-success">
                 <div class="card-header bg-success text-white">
