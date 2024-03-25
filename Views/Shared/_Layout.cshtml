@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Applicazione ASP.NET</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-7hUpOZrHbH6gj3JTG/As/SRTIDg4C3kZy3nDMeXNbOgNtqCL3KL9XDeIJmdHR8yYj5h2K3O/BZWl7EFKte9DEw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -19,20 +20,32 @@
     {
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-success d-print-none">
             <div class="container">
+                
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Attiva/Disattiva spostamento" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        <img src="https://media.istockphoto.com/id/1470993851/it/vettoriale/animale-amore-simbolo-zampa-stampa-con-cuore-vettore-isolato.jpg?s=612x612&w=0&k=20&c=qMAqAOfgsyqI2d-eVS3ARyTCdkIYkNoOI-Vf9WvnQzU=" width="40px" height="40px" class="rounded rounded-5 me-3"/>
                         @Html.ActionLink("ClinicaPerBestie", "Index", "Doctors", new { area = "" }, new { @class = "navbar-brand" })
-                        <li>@Html.ActionLink("Bestie", "Index", "Doctors", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Ricoveri Attivi", "ActiveHospitalizations", "Doctors", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>
+                            <a href="@Url.Action("Index", "Doctors", new { area = "" })" class="nav-link">
+                                <i class="bi bi-heart-pulse"></i> Bestie
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("ActiveHospitalizations", "Doctors", new { area = "" })" class="nav-link">
+                                <i class="bi bi-clipboard2-pulse"></i> Ricoveri Attivi
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
                 @if (Session["UserM"] != null)
                 {
-                    <a class="me-5 welcome-btn" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserM"]</a>
+                    <a class="me-5 welcome-btn" href="/Doctors/DottoreDet?id=@Session["DoctorID"]" style="color: inherit; text-decoration: none;"><i class="bi bi-person-circle"></i> Benvenuto, @Session["UserM"] </a>
                 }
                 else if (Session["UserF"] != null)
                 {
@@ -42,7 +55,7 @@
                 {
                     <form action="@Url.Action("LogoutFarmacia", "Home")" method="post">
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger">Logout</button>
+                        <button type="submit" style="background-color: #1c6345" class="btn btn-success">Logout <i class="bi bi-box-arrow-in-right"></i></button>
                     </form>
                 }
             </div>
@@ -58,10 +71,21 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @Html.ActionLink("FarmaciaXBestie", "Index", "Pharmacists", new { area = "" }, new { @class = "navbar-brand" })
-                        <li>@Html.ActionLink("Prodotti", "Index", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Ordini", "Orders", "Pharmacists",new { area = "" }, new { @class = "nav-link" })</li>
-<li>@Html.ActionLink("Medicina per Data", "MedicinaXData", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
+                        <img src="https://media.istockphoto.com/id/1470993851/it/vettoriale/animale-amore-simbolo-zampa-stampa-con-cuore-vettore-isolato.jpg?s=612x612&w=0&k=20&c=qMAqAOfgsyqI2d-eVS3ARyTCdkIYkNoOI-Vf9WvnQzU=" width="40px" height="40px" class="rounded rounded-5 me-3" />
+                        @Html.ActionLink("FarmaciaPerBestie", "Index", "Pharmacists", new { area = "" }, new { @class = "navbar-brand" })
+                        <li>
+                            <a href="@Url.Action("Index", "Pharmacists", new { area = "" })" class="nav-link">
+                                <i class="bi bi-capsule"></i> Prodotti
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("Orders", "Pharmacists", new { area = "" })" class="nav-link">
+                                <i class="bi bi-bag-check"></i> Ordini
+                            </a>
+                        </li>
+
+                        <li>@Html.ActionLink("Medicina per Data", "MedicinaXData", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Medicina per Cliente", "MedicinaXCliente", "Pharmacists", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
                 </div>
@@ -71,13 +95,13 @@
                 }
                 else if (Session["UserF"] != null)
                 {
-                    <a class="me-5 welcome-btn" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;">Benvenuto, @Session["UserF"]</a>//TODO
+                    <a class="me-5 welcome-btn" href="/Pharmacists/FarmacistaDet?id=@Session["PharmacistID"]" style="color: inherit; text-decoration: none;"><i class="bi bi-person-circle"></i> Benvenuto, @Session["UserF"]</a>//TODO
                 }
                 @if (Request.Cookies[".ASPXAUTH"] != null)
                 {
                     <form action="@Url.Action("LogoutFarmacia", "Home")" method="post">
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger">Logout</button>
+                        <button type="submit"  style="background-color: #04414a"  class="btn btn-primary">Logout <i class="bi bi-box-arrow-in-right"></i> </button>
                     </form>
                 }
             </div>
@@ -106,19 +130,19 @@
         @if (folder == "doctors")
         {
             <footer class="mt-4 border-top border-success">
-                <p class="text-success mt-2">&copy; @DateTime.Now.Year - Guerrieri Corp.</p>
+                <p class="text-success mt-2">&copy; @DateTime.Now.Year - ClinicaPerBestie.</p>
             </footer>
         }
         else if (folder == "pharmacists")
         {
             <footer class="mt-4" style="border-top:1px solid; border-color:darkcyan" >
-                <p class="mt-2" style="color:darkcyan">&copy; @DateTime.Now.Year - Guerrieri Corp.</p>
+                <p class="mt-2" style="color:darkcyan">&copy; @DateTime.Now.Year - FarmaciaPerBestie.</p>
             </footer>
         }
         else
         {
             <footer class="mt-4 border-top border-success">
-                <p class="text-success mt-2">&copy; @DateTime.Now.Year - Guerrieri Corp.</p>
+                <p class="text-success mt-2">&copy; @DateTime.Now.Year - PortalePerBestie.</p>
             </footer>
         }
 

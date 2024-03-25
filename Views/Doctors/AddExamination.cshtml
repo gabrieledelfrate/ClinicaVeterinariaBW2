@@ -7,20 +7,7 @@
     <h2 class="border-bottom border-success pb-3 text-success">Aggiungi Esame</h2>
 
 
-    @if (TempData["messageError"] == null && TempData["message"] != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["message"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-    else if (TempData["messageError"] != null)
-    {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            @TempData["messageError"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
+   
     @if (TempData["MessageReg"] != null)
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">

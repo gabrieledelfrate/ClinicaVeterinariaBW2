@@ -24,7 +24,9 @@ namespace ClinicaVeterinaria.Controllers
         [HttpGet]
         public ActionResult Index(string search)
         {
-            var beasts = db.Beasts.ToList();
+            var beasts = db.Beasts
+                   .OrderByDescending(b => b.BeastID) 
+                   .ToList();
 
             if (!string.IsNullOrEmpty(search))
             {
