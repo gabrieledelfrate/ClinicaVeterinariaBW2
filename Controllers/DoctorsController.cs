@@ -102,13 +102,10 @@ namespace ClinicaVeterinaria.Controllers
 
 
         [HttpGet]
-        public ActionResult AddHospitalization()
+        public ActionResult AddHospitalization(int id)
         {
-            var beasts = db.Beasts.ToList();
-            var doctors = db.Doctors.ToList();
-            ViewBag.BeastList = new SelectList(beasts, "BeastID", "Nome");
-            ViewBag.DoctorList = new SelectList(doctors, "DoctorID", "Nome");
-
+            var beast = db.Beasts.FirstOrDefault(x => x.BeastID == id);
+            ViewBag.Bestia = beast;
             var tuoModello = new Hospitalization();
             tuoModello.DataInizioRicovero = tuoModello.DataInizioRicovero.Date != DateTime.MinValue.Date ? tuoModello.DataInizioRicovero : DateTime.Now;
 
